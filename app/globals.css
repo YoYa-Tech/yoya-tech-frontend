@@ -1,0 +1,189 @@
+@import "./kuru-styles.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core brand tokens */
+  --color-bg-canvas: #000000;
+  --color-text-primary: #9a9a9a;
+  --color-text-secondary: #ffffff;
+  --color-text-muted: #7d7d7d;
+  --color-accent: #6fff54;
+  --color-bg-surface: #1f1f1f;
+  --color-border: #ffffff1c;
+  --color-gray-deep: #0a0b0a;
+  --color-gray-light: #d8d8d8;
+  --color-gray-dark: #757575;
+  --color-gray-light-2: #f3f4ec;
+  --color-gray-deep-2: #0f0f0f;
+
+  /* Live site tokens from Kuru Labs extraction */
+  --vv-text-primary: #ffffff;
+  --vv-text-muted: #9a9a9a;
+  --kuru-primary-ink: #6fff54;
+  --vv-text-subtle: #7d7d7d;
+  --vv-bg: #000000;
+  --kuru-primary: #6fff54;
+  --kuru-on-primary: #0a0b0a;
+  --color-blue-500: var(--kuru-primary);
+  --vv-text-strong: #d8d8d8;
+  --vv-nav-bg: rgba(0, 0, 0, 0.72);
+  --vv-surface: #141414;
+  --vv-surface-strong: #1f1f1f;
+  --vv-surface-2: #181818;
+  --vv-text-dim: #757575;
+  --vv-tint: rgba(255, 255, 255, 0.13);
+  --vv-tint-strong: rgba(255, 255, 255, 0.19);
+  --vv-tint-weak: rgba(255, 255, 255, 0.08);
+  --kuru-primary-deep: color-mix(in srgb, var(--kuru-primary) 48%, #000);
+  --kuru-primary-soft: color-mix(in srgb, var(--kuru-primary) 55%, #fff);
+  --kuru-line: color-mix(in srgb, var(--vv-text-primary) 11%, transparent);
+  --kuru-surface: color-mix(in srgb, var(--vv-text-primary) 4%, var(--vv-bg));
+  --vv-border: #ffffff17;
+  --vv-border-strong: #ffffff29;
+  --vv-card: transparent;
+  --vv-card-border: #ffffff33;
+  --vv-card-lift: #ffffff1a;
+  --vv-card-lift-mid: #ffffff08;
+  --vv-card-line: #ffffff8c;
+  --vv-card-rule: #ffffff24;
+  --vv-hairline: #ffffff33;
+  --vv-raise-shadow: transparent;
+  --vv-pop-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.6);
+  --vv-section-shadow: 0 44px 90px -24px rgba(0, 0, 0, 0.95), 0 18px 44px -18px rgba(0, 0, 0, 0.8);
+  --vv-future-wash: linear-gradient(158deg, #262626, #171717 34%, #0b0b0b 68%, #000000);
+
+  /* Durations & easings */
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-moderate: 500ms;
+  --duration-slow: 1200ms;
+  --ease-custom-1: cubic-bezier(0.22, 0.61, 0.36, 1.00);
+
+  /* Layout */
+  --page-max-width: 1420px;
+}
+
+[data-theme="light"] {
+  --color-bg-canvas: #ffffff;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #000000;
+  --color-text-muted: #5a5a5a;
+  --color-bg-surface: #f6f6f6;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --vv-bg: #ffffff;
+  --vv-text-primary: #000000;
+  --vv-text-muted: #5a5a5a;
+  --vv-surface: #f6f6f6;
+  --vv-nav-bg: rgba(255, 255, 255, 0.8);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg-canvas);
+  color: var(--color-text-secondary);
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg-canvas);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body, Geist, Inter, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+html, body {
+  cursor: url("/cursor/arrow.svg") 3 3, auto;
+}
+
+button, a, [role="button"], select, input, textarea {
+  cursor: pointer;
+}
+
+/* vv-breathe-cycle — 6000ms ease-in-out infinite */
+@keyframes vv-breathe-cycle {
+  0% { transform: translateY(-7.5px); }
+  50% { transform: translateY(7.5px); }
+  100% { transform: translateY(-7.5px); }
+}
+
+.vv-breathe {
+  animation: vv-breathe-cycle 6s ease-in-out infinite;
+}
+
+/* Scroll Reveal animations measured on Kuru Labs */
+[data-reveal="true"] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 15ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal="true"].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Marquee utilities */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee 60s linear infinite;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee 45s linear infinite reverse;
+}
+
+.animate-marquee:hover,
+.animate-marquee-slow:hover,
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
