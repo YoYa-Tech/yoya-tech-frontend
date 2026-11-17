@@ -2,6 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageSquare, Mail } from "lucide-react";
+import { RollingText } from "@/components/ui/rolling-text";
 import { WaterRipple } from "./water-ripple";
 
 export function ConversionCTA() {
@@ -17,11 +18,7 @@ export function ConversionCTA() {
       />
 
       <div className="mx-auto max-w-[1316px] px-6">
-        <span className="font-mono text-xs uppercase tracking-widest text-accent">
-          // INITIATE A PROJECT
-        </span>
-
-        <h2 className="mx-auto mt-4 max-w-4xl font-display text-[clamp(36px,6vw,72px)] font-medium leading-[1.08] tracking-tight text-white">
+        <h2 className="mx-auto max-w-4xl font-display text-[clamp(36px,6vw,72px)] font-medium leading-[1.08] tracking-[-0.04em] text-white">
           Have an idea in mind?{" "}
           <span className="text-accent italic font-serif">Let’s build it.</span>
         </h2>
@@ -31,20 +28,22 @@ export function ConversionCTA() {
         </p>
 
         {/* Dual Primary Call-to-Actions */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Button asChild size="lg" className="rounded-full px-8 py-6 text-base font-semibold shadow-xl shadow-accent/20">
-            <Link href="#pricing">Start a project</Link>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <Button asChild size="lg" className="rounded-full px-7 sm:px-8 py-3 text-sm sm:text-base font-medium min-w-[160px]">
+            <Link href="#pricing">
+              <RollingText text="Start a project" />
+            </Link>
           </Button>
 
           <Button
             asChild
             variant="outline"
             size="lg"
-            className="rounded-full px-8 py-6 text-base text-white border-white/20 hover:border-white/40"
+            className="rounded-full px-7 sm:px-8 py-3 text-sm sm:text-base text-white border-white/20 hover:border-white/40 font-medium group min-w-[160px]"
           >
-            <Link href="#works" className="group">
-              See our work
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Link href="#works" className="inline-flex items-center justify-center">
+              <RollingText text="See our work" />
+              <ArrowRight className="ml-2 h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </div>

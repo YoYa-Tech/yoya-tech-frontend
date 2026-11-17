@@ -8,11 +8,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-accent text-gray-deep rounded-full hover:bg-[color-mix(in_srgb,var(--kuru-primary)_82%,#ffffff)] active:scale-98 font-semibold shadow-sm",
+          "bg-white text-black rounded-full hover:bg-gray-light active:scale-[0.98] font-medium shadow-sm",
+        accent:
+          "bg-accent text-gray-deep rounded-full hover:bg-[#8cff76] active:scale-[0.98] font-medium shadow-sm",
         secondary:
-          "bg-white text-gray-deep rounded-full hover:bg-gray-light active:scale-98 font-semibold",
+          "bg-white text-gray-deep rounded-full hover:bg-gray-light active:scale-[0.98] font-medium",
         outline:
-          "border border-border text-text-secondary bg-transparent hover:bg-white/5 active:scale-98 rounded-full",
+          "border border-white/20 text-text-secondary bg-transparent hover:border-white/40 hover:bg-white/5 active:scale-[0.98] rounded-full font-medium",
+        glass:
+          "border border-transparent bg-white/10 text-white hover:bg-white/20 active:scale-[0.98] rounded-full font-medium",
         ghost:
           "bg-transparent text-text-secondary hover:text-white hover:bg-white/5 rounded-md",
         nav:
@@ -21,9 +25,9 @@ const buttonVariants = cva(
           "bg-[#141414] border border-border text-text-secondary rounded-full hover:border-white/30 hover:bg-[#1f1f1f]",
       },
       size: {
-        sm: "h-8 px-3 text-xs",
-        md: "h-10 px-4.5 text-body",
-        lg: "h-12 px-6 text-[15px]",
+        sm: "h-8 px-3.5 text-xs",
+        md: "h-10 px-5 text-sm",
+        lg: "h-11 sm:h-12 px-6 sm:px-8 text-[14px] sm:text-[15px]",
         icon: "h-10 w-10 p-0 rounded-full",
       },
     },
@@ -41,13 +45,25 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
+    const combinedClassName = cn(buttonVariants({ variant, size, className }));
+
+    if (asChild && React.isValidElement(children)) {
+      const child = children as React.ReactElement<{ className?: string }>;
+      return React.cloneElement(child, {
+        className: cn(combinedClassName, child.props.className),
+        ...props,
+      });
+    }
+
     return (
       <button
         ref={ref}
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={combinedClassName}
         {...props}
-      />
+      >
+        {children}
+      </button>
     );
   }
 );

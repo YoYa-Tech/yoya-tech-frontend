@@ -1,138 +1,382 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { TestimonialsGlobe } from "./testimonials-globe";
 
-const TESTIMONIALS = [
+interface StatItem {
+  value: number;
+  suffix?: string;
+  label: string;
+}
+
+interface TestimonialItem {
+  id: string;
+  quote: string;
+  name: string;
+  role?: string;
+  company?: string;
+  rating?: number;
+  avatar?: string | null;
+}
+
+const STATS: StatItem[] = [
+  { value: 99, suffix: "%", label: "Client satisfaction on milestone delivery" },
+  { value: 100, suffix: "%", label: "On-time release and SLA commitment" },
+  { value: 16, suffix: "+", label: "Digital platforms and systems launched" },
+];
+
+const TESTIMONIALS: TestimonialItem[] = [
   {
+    id: "lasada",
     quote:
       "I've worked with Kuru Labs on several different occasions and it's always a pleasure. They go through every detail and deliver according to your desires.",
-    author: "Lasada Pippen",
+    name: "Lasada Pippen",
     role: "Keynote Speaker, Author & Entrepreneur",
-    location: "United States",
+    company: "United States",
+    rating: 5,
     avatar: "/team/avatar-1.0c4e3fc0.jpg",
-    verified: "Verified Client · Contra",
   },
   {
+    id: "lucas",
     quote:
       "Great work overall. The design feels premium, the layout is well structured, and everything is responsive. They made the changes I requested quickly and didn't miss a beat.",
-    author: "Lucas M.",
+    name: "Lucas M.",
     role: "Founder & Product Lead",
-    location: "United States",
+    company: "United States",
+    rating: 5,
     avatar: null,
-    verified: "Verified Client · Direct Contract",
   },
   {
+    id: "saleh",
     quote:
       "Talented, creative, and most importantly trustworthy. They completed the revisions even after the project was marked complete on Contra weeks earlier.",
-    author: "Saleh Al Zamil",
-    role: "Managing Director, Tamkene",
-    location: "Saudi Arabia",
+    name: "Saleh Al Zamil",
+    role: "Managing Director",
+    company: "Tamkene, Saudi Arabia",
+    rating: 5,
     avatar: "/team/avatar-2.58306c73.jpg",
-    verified: "Verified Client · Tamkene Group",
   },
 ];
 
+const formatNum = (idx: number) => String(idx + 1).padStart(2, "0");
+
+// Double Quote SVG Icon matching Kuru Labs
+function DoubleQuoteIcon({ className = "" }: { className?: string }) {
+  const d =
+    "M18 4v10c0 7.7-4.6 12.9-11.4 14.9L5 25.6c3.6-1.3 5.8-3.7 6.4-6.6H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h12Z";
+  return (
+    <svg viewBox="0 0 44 32" className={className} fill="currentColor" aria-hidden="true">
+      <path d={d} />
+      <path d={d} transform="translate(24 0)" />
+    </svg>
+  );
+}
+
+// 5-Star Rating Component
+function StarRating({ filled = 5 }: { filled?: number }) {
+  return (
+    <div aria-hidden="true" className="flex gap-1">
+      {[1, 2, 3, 4, 5].map((t) => (
+        <svg
+          key={t}
+          viewBox="0 0 24 24"
+          className={`size-[17px] ${t <= filled ? "text-[#f59e0b]" : "text-white/20"}`}
+          fill="currentColor"
+        >
+          <path d="M12 2.6l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3-5.6-3.3-5.6 3.3 1.4-6.3L3 9.1l6.4-.6L12 2.6Z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+// Card Inner Glass Highlights matching Kuru Labs
+function CardInnerGlow() {
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-1/2 h-px w-[420px] max-w-[80%] -translate-x-1/2"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%)",
+        }}
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-[12px]"
+        style={{
+          background:
+            "radial-gradient(58% 46% at 50% 0%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 45%, transparent 78%)",
+        }}
+      />
+    </>
+  );
+}
+
 export function TestimonialsSection() {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
+  const [hasScrolledIn, setHasScrolledIn] = React.useState(false);
+  const [animatedValues, setAnimatedValues] = React.useState<number[]>(STATS.map(() => 0));
 
-  const prev = () => {
-    setCurrentIndex((c) => (c === 0 ? TESTIMONIALS.length - 1 : c - 1));
-  };
+  const total = TESTIMONIALS.length;
+  const goTo = React.useCallback(
+    (idx: number) => {
+      setCurrentIndex((idx % total + total) % total);
+    },
+    [total]
+  );
 
-  const next = () => {
-    setCurrentIndex((c) => (c === TESTIMONIALS.length - 1 ? 0 : c + 1));
-  };
+  // Auto-advance every 7 seconds, pauses on hover/focus
+  React.useEffect(() => {
+    if (isPaused || total < 2) return;
+    const timer = setInterval(() => {
+      goTo(currentIndex + 1);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [currentIndex, isPaused, total, goTo]);
 
-  const current = TESTIMONIALS[currentIndex];
+  // Count-up stats on scroll into view
+  React.useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasScrolledIn) {
+          setHasScrolledIn(true);
+          const duration = 1500;
+          const startTime = performance.now();
+
+          const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(1, elapsed / duration);
+            // Ease-out quad
+            const eased = 1 - (1 - progress) * (1 - progress);
+
+            setAnimatedValues(STATS.map((s) => Math.round(s.value * eased)));
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [hasScrolledIn]);
 
   return (
     <section
+      ref={sectionRef}
       id="testimonials"
-      className="relative z-10 bg-black py-28 sm:py-36 border-b border-white/5 overflow-hidden"
+      aria-labelledby="testimonials-heading"
+      className="relative isolate z-10 overflow-hidden bg-black py-[clamp(80px,9vw,120px)] border-b border-white/10"
     >
-      <div className="mx-auto max-w-[1316px] px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-accent">
-              // CLIENT TESTIMONIALS
-            </span>
-            <h2 className="mt-3 font-display text-4xl sm:text-5xl font-medium tracking-tight text-white">
-              Trusted by founders worldwide
-            </h2>
-          </div>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={prev}
-              aria-label="Previous testimonial"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-[#161616] text-white/80 transition-all hover:border-accent hover:text-accent hover:bg-black"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              onClick={next}
-              aria-label="Next testimonial"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-[#161616] text-white/80 transition-all hover:border-accent hover:text-accent hover:bg-black"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
+      {/* Interactive 3D WebGL Rotating Globe Background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 grid place-items-center"
+      >
+        <div className="relative -mt-[clamp(44px,5.5vw,92px)] aspect-square w-[min(980px,130vw)] opacity-[0.72]">
+          <TestimonialsGlobe />
         </div>
+      </div>
 
-        {/* Featured Testimonial Card */}
-        <div className="relative rounded-3xl border border-white/10 bg-[#121212] p-8 sm:p-12 lg:p-16">
-          <Quote className="h-12 w-12 text-accent/30 mb-8" />
+      {/* Radial fade mask over globe for seamless dark immersion */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(62% 62% at 50% 42%, transparent 42%, rgba(0, 0, 0, 0.45) 70%, #000000 96%)",
+        }}
+      />
 
-          <p className="font-display text-2xl sm:text-3xl lg:text-4xl font-normal leading-relaxed text-white">
-            “{current.quote}”
-          </p>
+      <div className="mx-auto max-w-[1380px] px-6 md:px-8">
+        {/* Giant Centerpiece Heading */}
+        <h2
+          id="testimonials-heading"
+          className="text-center font-display text-[clamp(46px,9vw,132px)] leading-[1] font-medium tracking-[-0.05em] text-white"
+        >
+          Testimonials
+        </h2>
 
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-white/10">
-            <div className="flex items-center gap-4">
-              {current.avatar ? (
-                <div className="relative h-14 w-14 overflow-hidden rounded-full border-2 border-accent/40 bg-black">
-                  <Image
-                    src={current.avatar}
-                    alt={current.author}
-                    fill
-                    className="object-cover"
+        {/* 2-Card Stage overlapping the centerpiece heading */}
+        <div
+          className="vv-quote-stage relative mt-7 md:mt-[clamp(-44px,-3vw,-18px)]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocusCapture={() => setIsPaused(true)}
+          onBlurCapture={() => setIsPaused(false)}
+        >
+          <div className="mx-auto grid max-w-[1120px] gap-4 lg:grid-cols-12">
+            {/* Left Card: 3 Live Count-Up Stats */}
+            <div
+              className="relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 backdrop-blur-[12px] order-2 flex flex-col justify-between gap-8 p-8 lg:order-1 lg:col-span-4 lg:gap-10 lg:p-10 shadow-[0_24px_50px_rgba(0,0,0,0.8)]"
+            >
+              <CardInnerGlow />
+              {STATS.map((s, idx) => (
+                <div key={s.label} className="relative">
+                  <div className="flex items-start font-display text-[clamp(40px,4.4vw,60px)] leading-[0.9] font-medium tracking-[-0.045em] text-white">
+                    <span className="tabular-nums">
+                      {hasScrolledIn ? animatedValues[idx] : s.value}
+                    </span>
+                    {s.suffix && (
+                      <span className="ml-0.5 text-[0.46em] leading-[1.5] text-accent">
+                        {s.suffix}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-2 text-xs sm:text-sm text-text-muted">{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Card: Client Testimonial Carousel */}
+            <div
+              className="relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 backdrop-blur-[12px] order-1 flex flex-col p-8 lg:order-2 lg:col-span-8 lg:p-11 shadow-[0_24px_50px_rgba(0,0,0,0.8)]"
+            >
+              <CardInnerGlow />
+
+              {/* Top Bar: Counter & Double Quote Icon */}
+              <div className="relative flex items-center justify-between gap-6">
+                <div>
+                  <p className="text-xs sm:text-sm tracking-[0.06em] text-text-muted tabular-nums">
+                    <span className="text-white font-medium" aria-live="polite">
+                      {formatNum(currentIndex)}
+                    </span>{" "}
+                    <span aria-hidden="true">/ {formatNum(total - 1)}</span>
+                    <span className="sr-only">of {total}</span>
+                  </p>
+                  <span
+                    aria-hidden="true"
+                    className="mt-2.5 block h-px w-14 bg-white/20"
                   />
                 </div>
-              ) : (
-                <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/20 bg-accent/10 font-mono text-lg font-bold text-accent">
-                  {current.author[0]}
-                </div>
-              )}
+                <DoubleQuoteIcon className="h-[clamp(20px,2.2vw,28px)] w-auto shrink-0 text-white opacity-30" />
+              </div>
 
-              <div>
-                <h4 className="font-display text-lg font-medium text-white">
-                  {current.author}
-                </h4>
-                <p className="text-xs sm:text-sm text-text-muted">
-                  {current.role} · <span className="text-white/80">{current.location}</span>
-                </p>
+              {/* Quote Body with Star Rating & Fade Transition */}
+              <div className="relative mt-8 grid min-h-[clamp(210px,20vw,268px)] grid-cols-1">
+                {TESTIMONIALS.map((t, idx) => {
+                  const isActive = idx === currentIndex;
+                  return (
+                    <figure
+                      key={t.id}
+                      style={{ gridArea: "1 / 1" }}
+                      aria-hidden={!isActive}
+                      className={`flex h-full flex-col transition-opacity duration-500 ease-out ${
+                        isActive ? "opacity-100" : "pointer-events-none opacity-0"
+                      }`}
+                    >
+                      {t.rating && (
+                        <div className="flex items-center gap-2.5">
+                          <StarRating filled={t.rating} />
+                          <span className="sr-only">{t.rating} out of 5</span>
+                        </div>
+                      )}
+
+                      <blockquote
+                        className={`mt-auto font-display text-[clamp(18px,1.7vw,25px)] leading-[1.4] font-medium tracking-[-0.02em] text-white ${
+                          t.rating ? "pt-6" : ""
+                        }`}
+                      >
+                        “{t.quote}”
+                      </blockquote>
+
+                      {/* Author Caption */}
+                      <figcaption className="mt-7 flex items-center gap-3.5 sm:pr-24">
+                        {t.avatar ? (
+                          <div className="relative size-12 shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/5">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={t.avatar}
+                              alt={t.name}
+                              width={48}
+                              height={48}
+                              loading="lazy"
+                              decoding="async"
+                              className="size-12 shrink-0 rounded-full object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <span
+                            aria-hidden="true"
+                            className="grid size-12 shrink-0 place-items-center rounded-full border border-white/10 bg-white/5 font-display text-[17px] font-medium text-white/70"
+                          >
+                            {t.name.trim().charAt(0).toUpperCase()}
+                          </span>
+                        )}
+
+                        <span className="min-w-0">
+                          <span className="block truncate text-[15px] font-medium tracking-[0.02em] text-white uppercase">
+                            {t.name}
+                          </span>
+                          {(t.role || t.company) && (
+                            <span className="block text-xs sm:text-sm text-text-muted sm:truncate">
+                              {[t.role, t.company].filter(Boolean).join(", ")}
+                            </span>
+                          )}
+                        </span>
+                      </figcaption>
+                    </figure>
+                  );
+                })}
+              </div>
+
+              {/* Prev / Next Navigation Arrows */}
+              <div className="mt-6 flex items-center justify-end gap-2 sm:absolute sm:right-8 sm:bottom-8 sm:mt-0 lg:right-11 lg:bottom-11">
+                <button
+                  type="button"
+                  onClick={() => goTo(currentIndex - 1)}
+                  aria-label="Previous testimonial"
+                  className="grid size-10 place-items-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="size-[18px]"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M15 6l-6 6 6 6" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goTo(currentIndex + 1)}
+                  aria-label="Next testimonial"
+                  className="grid size-10 place-items-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
+                >
+                  <span className="rotate-180">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="size-[18px]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M15 6l-6 6 6 6" />
+                    </svg>
+                  </span>
+                </button>
               </div>
             </div>
-
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/60 px-4 py-1.5 font-mono text-xs text-accent">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
-              <span>{current.verified}</span>
-            </div>
           </div>
-        </div>
-
-        {/* Client Logos / Social Proof */}
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-white/40 text-xs font-mono">
-          <span>ETHIOPIAN AIRLINES CARGO</span>
-          <span>·</span>
-          <span>TAMKENE SAUDI</span>
-          <span>·</span>
-          <span>ZEMEN BANK CORE</span>
-          <span>·</span>
-          <span>GUARDIANVETS</span>
         </div>
       </div>
     </section>

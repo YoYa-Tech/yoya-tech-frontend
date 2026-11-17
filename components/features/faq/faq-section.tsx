@@ -53,10 +53,7 @@ export function FAQSection() {
     <section id="faqs" className="bg-black py-28 sm:py-36 border-b border-white/5">
       <div className="mx-auto max-w-[1380px] px-6 md:px-8">
         <div className="text-center">
-          <span className="font-mono text-xs uppercase tracking-widest text-accent">
-            // FREQUENTLY ASKED
-          </span>
-          <h2 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-white">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-white">
             Frequently Asked <span className="text-accent italic font-serif">Questions</span>
           </h2>
           <p className="mt-4 text-base text-text-primary max-w-lg mx-auto">

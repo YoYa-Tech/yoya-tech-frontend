@@ -1,4 +1,28 @@
 @font-face {
+  font-family: "GT Walsheim";
+  src: url("/fonts/GTWalsheimTrial-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim";
+  src: url("/fonts/GTWalsheimTrial-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim";
+  src: url("/fonts/GTWalsheimTrial-Medium.otf") format("opentype");
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: Kuru Lausanne;
   src: url(/kuru/fonts/lausanne.woff2?v=57d7b931e97a) format("woff2");
   font-weight: 300;
@@ -13,6 +37,8 @@
    refresh the favicon, social card and showcase images, and restart the server.
    ========================================================================== */
 :root {
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-walsheim: "GT Walsheim", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --kuru-primary: #6fff54;
   /* Text and icons placed on the primary. */
   --kuru-on-primary: #0a0b0a;
@@ -694,6 +720,38 @@ h2.truncate.font-display.tracking-h3 {
 .kuru-text-link:hover svg {
   transform: translateX(3px);
 }
+
+/* Signature Kuru Letter Roll Hover Animation */
+.vv-roll {
+  display: inline-flex;
+  overflow: hidden;
+  height: 1.15em;
+  line-height: 1.15;
+  vertical-align: middle;
+}
+.vv-roll-char {
+  display: inline-flex !important;
+  flex-direction: column !important;
+  height: 1.15em;
+  line-height: 1.15;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 0.015s);
+  will-change: transform;
+}
+.vv-roll-char > span {
+  display: block !important;
+  height: 1.15em;
+  line-height: 1.15;
+  flex-shrink: 0;
+}
+:hover > .vv-roll .vv-roll-char,
+button:hover .vv-roll-char,
+a:hover .vv-roll-char,
+.group:hover .vv-roll-char {
+  transform: translateY(-1.15em);
+}
+
 :is(.kuru-button, .kuru-text-link, .kuru-tier):focus-visible {
   outline: 2px solid var(--kuru-primary-ink);
   outline-offset: 3px;
@@ -720,28 +778,40 @@ h2.truncate.font-display.tracking-h3 {
   gap: 0 16px;
   padding: 28px 0;
   border-bottom: 1px solid var(--kuru-line);
-  opacity: 0;
-  translate: 0 16px;
-  transition:
-    opacity 600ms var(--ease-brand),
-    translate 600ms var(--ease-brand);
+  cursor: pointer;
+  opacity: 1;
+  translate: 0 0;
 }
 .kuru-outcome.is-in {
   opacity: 1;
   translate: 0 0;
 }
-.kuru-outcome::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 -1px;
-  height: 1px;
-  background: var(--kuru-primary-ink);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 700ms var(--ease-brand);
+.kuru-outcome:hover,
+.kuru-outcome[data-active="true"] {
+  z-index: 10;
 }
-.kuru-outcome[data-active]::after {
+.kuru-outcome::after {
+  display: none;
+}
+.kuru-outcome-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--kuru-primary-ink, #6fff54);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 10;
+}
+.kuru-outcome:hover .kuru-outcome-line,
+.kuru-outcome[data-active="true"] .kuru-outcome-line,
+.kuru-outcome[data-active] .kuru-outcome-line,
+.kuru-outcome.data-active .kuru-outcome-line {
   transform: scaleX(1);
+  transform-origin: left center;
 }
 .kuru-outcome-index {
   padding-top: 7px;
@@ -780,12 +850,21 @@ h2.truncate.font-display.tracking-h3 {
   line-height: 1.6;
   color: var(--vv-text-subtle);
 }
+.kuru-outcome:hover h3,
+.kuru-outcome:hover .kuru-outcome-icon,
+.kuru-outcome[data-active="true"] h3,
+.kuru-outcome[data-active="true"] .kuru-outcome-icon,
 .kuru-outcome[data-active] h3,
-.kuru-outcome[data-active] .kuru-outcome-icon {
-  color: var(--vv-text-primary);
+.kuru-outcome[data-active] .kuru-outcome-icon,
+.kuru-outcome.data-active h3,
+.kuru-outcome.data-active .kuru-outcome-icon {
+  color: var(--vv-text-primary, #ffffff);
 }
-.kuru-outcome[data-active] .kuru-outcome-index {
-  color: var(--kuru-primary-ink);
+.kuru-outcome:hover .kuru-outcome-index,
+.kuru-outcome[data-active="true"] .kuru-outcome-index,
+.kuru-outcome[data-active] .kuru-outcome-index,
+.kuru-outcome.data-active .kuru-outcome-index {
+  color: var(--kuru-primary-ink, #6fff54);
 }
 
 /* Pricing by division: stacked cards */
@@ -2593,3 +2672,142 @@ section[data-current] .kuru-ws-line,
 .kuru-process ol::after {
   z-index: -1;
 }
+
+/* Selected Works: Sticky Stacking Cards */
+.kuru-works-stack {
+  --kuru-works-top: clamp(84px, 10vh, 104px);
+  position: relative;
+}
+.kuru-work-card {
+  position: sticky;
+  top: calc(var(--kuru-works-top) + var(--i, 0) * 18px);
+  padding-bottom: clamp(24px, 3.5vw, 40px);
+  will-change: transform;
+  transition: opacity 300ms var(--ease-brand), transform 300ms var(--ease-brand);
+}
+.kuru-work-card:last-child {
+  padding-bottom: 0;
+}
+.kuru-work-card-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid var(--kuru-line);
+  background: var(--kuru-surface);
+  transform: scale(calc(1 - var(--depth, 0) * 0.035));
+  transform-origin: 50% 0;
+  transition: border-color 400ms var(--ease-brand), background-color 400ms var(--ease-brand);
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.85);
+}
+.kuru-work-card-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #000000;
+  opacity: calc(min(var(--depth, 0), 2) * 0.28);
+  pointer-events: none;
+  transition: opacity 160ms ease;
+  z-index: 25;
+}
+.kuru-work-numeral {
+  position: absolute;
+  right: clamp(16px, 3vw, 40px);
+  bottom: -0.15em;
+  font-family: var(--font-walsheim), system-ui, sans-serif;
+  font-size: clamp(120px, 16vw, 220px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: color-mix(in srgb, var(--vv-text-primary) 3.5%, transparent);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.kuru-work-card .kuru-work-content {
+  position: relative;
+  z-index: 10;
+}
+@media (max-width: 767px) {
+  .kuru-work-card {
+    position: relative;
+    top: auto;
+    padding-bottom: 24px;
+  }
+  .kuru-work-card-inner {
+    transform: none !important;
+  }
+  .kuru-work-card-inner::after {
+    display: none;
+  }
+}
+
+/* Approach Bento Artwork & Mockups */
+.vv-art-mobile {
+  background-image: url(/kuru/showcase/art-sphere.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+}
+.vv-art-conversion {
+  background-image: url(/kuru/showcase/art-bluelines.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+}
+.vv-art-pixel {
+  background-image: url(/kuru/showcase/art-stars.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+}
+.vv-art-cms {
+  background: radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.08), transparent 70%);
+}
+.vv-watch-dial {
+  background-image: url(/approach/dial.webp);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Analog Watch Hands Animations */
+@keyframes vv-rotate-hour {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes vv-rotate-minute {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes vv-rotate-second {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.vv-hand-hour {
+  animation: vv-rotate-hour 43200s linear infinite;
+  transform-origin: center center;
+}
+.vv-hand-minute {
+  animation: vv-rotate-minute 3600s linear infinite;
+  transform-origin: center center;
+}
+.vv-hand-second {
+  animation: vv-rotate-second 60s linear infinite;
+  transform-origin: center center;
+}
+
+/* Breathing Floating Animation */
+@keyframes vv-breathe-cycle {
+  0% { transform: translateY(calc(var(--vv-breathe-distance, 7.5px) * -1)); }
+  50% { transform: translateY(var(--vv-breathe-distance, 7.5px)); }
+  100% { transform: translateY(calc(var(--vv-breathe-distance, 7.5px) * -1)); }
+}
+.vv-breathe {
+  animation: vv-breathe-cycle 6s ease-in-out infinite;
+}
+
+

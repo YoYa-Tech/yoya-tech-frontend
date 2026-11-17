@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { RollingText } from "@/components/ui/rolling-text";
 import { Sun, Moon, Menu, X, ArrowRight } from "lucide-react";
 
 export function Navbar() {
@@ -81,8 +82,10 @@ export function Navbar() {
           </button>
 
           {/* Start Project CTA Pill */}
-          <Button asChild size="sm" className="rounded-full px-5 font-semibold">
-            <Link href="#pricing">Start a project</Link>
+          <Button asChild size="sm" className="rounded-full px-5 py-2 font-medium">
+            <Link href="#pricing">
+              <RollingText text="Start a project" />
+            </Link>
           </Button>
         </div>
 

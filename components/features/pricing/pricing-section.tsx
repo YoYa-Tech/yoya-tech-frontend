@@ -2,76 +2,82 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { RollingText } from "@/components/ui/rolling-text";
 
-const DIVISIONS = [
+interface Tier {
+  name: string;
+  price: string;
+  text: string;
+  href: string;
+  per?: string;
+}
+
+interface Division {
+  id: string;
+  name: string;
+  summary: string;
+  note: string;
+  tiers: Tier[];
+}
+
+const DIVISIONS: Division[] = [
   {
     id: "web",
     name: "Web & digital presence",
-    short: "Web & Commerce",
     summary:
       "Websites and online stores that carry your brand, load fast and turn visitors into customers.",
-    note: "Starting points in US dollars · Transparent flat scoping",
+    note: "Starting points in US dollars",
     tiers: [
       {
         name: "Business website",
         price: "$800",
-        period: "",
-        desc: "Three core pages designed from the ground up, on a CMS you run yourself.",
-        highlights: ["Custom typography & layout", "CMS setup with visual editor", "Mobile & SEO optimized"],
+        text: "Three core pages designed from the ground up, on a CMS you run yourself.",
+        href: "#pricing-web",
       },
       {
         name: "eCommerce store",
         price: "$1,500",
-        period: "",
-        desc: "Catalogue, cart and checkout, with a dashboard you can actually run.",
-        highlights: ["Stripe / payment gateway setup", "Inventory management dashboard", "Order tracking & emails"],
+        text: "Catalogue, cart and checkout, with a dashboard you can actually run.",
+        href: "#pricing-web",
       },
       {
         name: "Custom build",
         price: "$3,000",
-        period: "",
-        desc: "Multi-collection CMS, advanced motion and larger sites, scoped together first.",
-        highlights: ["Bespoke animations & 3D WebGL", "Multi-lingual & localization", "Performance SLA guarantee"],
+        text: "Multi-collection CMS, advanced motion and larger sites, scoped together first.",
+        href: "#pricing-web",
       },
     ],
   },
   {
-    id: "product",
+    id: "product-engineering",
     name: "Product engineering",
-    short: "Product Engineering",
     summary:
       "Customer-facing platforms, web and mobile apps, and the infrastructure underneath them, built to scale.",
-    note: "Starting points in US dollars, confirmed after discovery call",
+    note: "Starting points in US dollars, confirmed after a discovery call",
     tiers: [
       {
         name: "MVP launch",
         price: "$2,500",
-        period: "",
-        desc: "A focused first version: core flows, accounts and an admin, ready for real users.",
-        highlights: ["User authentication & roles", "Database architecture & API", "Production cloud deployment"],
+        text: "A focused first version: core flows, accounts and an admin, ready for real users.",
+        href: "#pricing-product-engineering",
       },
       {
         name: "Mobile app",
         price: "$4,000",
-        period: "",
-        desc: "iOS and Android from one codebase, connected to your backend and payments.",
-        highlights: ["Flutter / React Native cross-platform", "Push notifications & maps", "App Store & Google Play setup"],
+        text: "iOS and Android from one codebase, connected to your backend and payments.",
+        href: "#pricing-product-engineering",
       },
       {
         name: "Web platform",
         price: "$6,000",
-        period: "",
-        desc: "Portals, dashboards and SaaS products with roles, billing and integrations.",
-        highlights: ["Multi-tenant architecture", "Subscription billing (Stripe)", "Comprehensive admin console"],
+        text: "Portals, dashboards and SaaS products with roles, billing and integrations.",
+        href: "#pricing-product-engineering",
       },
     ],
   },
   {
-    id: "ai",
+    id: "automation-ai",
     name: "Automation & AI",
-    short: "Automation & AI",
     summary:
       "Repetitive work handed to automations and AI, so your team spends its time on what matters.",
     note: "Starting points in US dollars, per workflow or assistant",
@@ -79,161 +85,202 @@ const DIVISIONS = [
       {
         name: "Workflow automation",
         price: "$400",
-        period: "",
-        desc: "Connect your tools with n8n, Make or Zapier and take one process off your team’s plate.",
-        highlights: ["Process audit & mapping", "Error alerts to Slack/WhatsApp", "Data sync between CRM & ERP"],
+        text: "Connect your tools with n8n, Make or Zapier and take one process off your team’s plate.",
+        href: "#pricing-automation-ai",
       },
       {
         name: "AI assistant",
         price: "$1,200",
-        period: "",
-        desc: "A chat assistant that answers from your own documents, on your site or WhatsApp.",
-        highlights: ["RAG vector knowledge retrieval", "Site widget & WhatsApp integration", "Hallucination safeguards"],
+        text: "A chat assistant that answers from your own documents, on your site or WhatsApp.",
+        href: "#pricing-automation-ai",
       },
       {
         name: "AI agents & custom ML",
         price: "$3,000",
-        period: "",
-        desc: "Agents that act across your systems, and models trained on your own business data.",
-        highlights: ["Multi-agent tool invocation", "Automated email & order triage", "Custom fine-tuned pipelines"],
+        text: "Agents that act across your systems, and models trained on your own data.",
+        href: "#pricing-automation-ai",
       },
     ],
   },
   {
-    id: "support",
+    id: "partnership",
     name: "Partnership & support",
-    short: "Ongoing Support",
     summary:
       "A long-term technical partner for upkeep, steady improvement and new ideas after launch.",
-    note: "Monthly retainers in US dollars · Cancel anytime",
+    note: "Monthly plans in US dollars",
     tiers: [
       {
         name: "Care plan",
         price: "$150",
-        period: "/mo",
-        desc: "Updates, backups, monitoring and small fixes for one site or app.",
-        highlights: ["Weekly security patches", "Automated daily backups", "Uptime & performance monitoring"],
+        text: "Updates, backups, monitoring and small fixes for one site or app.",
+        href: "#pricing-partnership",
+        per: "/mo",
       },
       {
         name: "Growth plan",
         price: "$500",
-        period: "/mo",
-        desc: "Monthly hours for improvements, content, analytics and new automations.",
-        highlights: ["15 dedicated hours / month", "Feature backlog delivery", "Conversion rate optimization"],
+        text: "Monthly hours for improvements, content, analytics and new automations.",
+        href: "#pricing-partnership",
+        per: "/mo",
       },
       {
         name: "Dedicated capacity",
         price: "$1,500",
-        period: "/mo",
-        desc: "A part-time designer and engineer working inside your product roadmap.",
-        highlights: ["45 hours dedicated sprint time", "Direct Slack / WhatsApp channel", "Sprint planning & architecture review"],
+        text: "A part-time designer and engineer working inside your roadmap.",
+        href: "#pricing-partnership",
+        per: "/mo",
       },
     ],
   },
 ];
 
-export function PricingSection() {
-  const [activeDivision, setActiveDivision] = React.useState("web");
+const pad = (n: number) => String(n).padStart(2, "0");
+const clamp = (val: number) => Math.max(0, Math.min(1, val));
 
-  const current = DIVISIONS.find((d) => d.id === activeDivision) || DIVISIONS[0];
+export function PricingSection() {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  const cardRefs = React.useRef<(HTMLElement | null)[]>([]);
+
+  React.useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let stackInView = false;
+    let frame = 0;
+    const stackTop = 112;
+
+    function renderStack() {
+      frame = 0;
+      if (!stackInView || window.innerWidth < 768) return;
+
+      const arrived = cardRefs.current.map((card, index) => {
+        if (!card || !index) return 0;
+        const distance = card.getBoundingClientRect().top - (stackTop + index * 20);
+        return clamp(1 - distance / (window.innerHeight * 0.7));
+      });
+
+      cardRefs.current.forEach((card, index) => {
+        if (!card) return;
+        const depth = arrived.slice(index + 1).reduce((sum, value) => sum + value, 0);
+        card.style.setProperty("--depth", depth.toFixed(3));
+      });
+    }
+
+    function schedule() {
+      if (!frame && stackInView) {
+        frame = requestAnimationFrame(renderStack);
+      }
+    }
+
+    const stackObserver = new IntersectionObserver((entries) => {
+      stackInView = entries[entries.length - 1].isIntersecting;
+      schedule();
+    });
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            revealObserver.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -12% 0px" }
+    );
+
+    stackObserver.observe(section);
+
+    cardRefs.current.forEach((card) => {
+      if (card) revealObserver.observe(card);
+    });
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    schedule();
+
+    return () => {
+      stackObserver.disconnect();
+      revealObserver.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, []);
 
   return (
-    <section id="pricing" className="relative z-10 bg-black py-28 sm:py-36 border-b border-white/5">
-      <div className="mx-auto max-w-[1316px] px-6">
+    <section
+      id="pricing"
+      ref={sectionRef}
+      className="kuru-pricing bg-black text-white"
+      aria-labelledby="kuru-pricing-heading"
+    >
+      <div className="kuru-wrap">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
-          <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-accent">
-              // TRANSPARENT INVESTMENT
-            </span>
-            <h2 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-white">
-              Pricing
-            </h2>
-            <p className="mt-3 text-base text-text-primary max-w-lg">
-              Straightforward starting points with zero hidden fees. Scope and deliverables confirmed before any code is written.
-            </p>
-          </div>
-
-          {/* Division switcher pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            {DIVISIONS.map((div) => (
-              <button
-                key={div.id}
-                onClick={() => setActiveDivision(div.id)}
-                className={`rounded-full px-4 py-2 text-xs sm:text-sm font-medium transition-all ${
-                  activeDivision === div.id
-                    ? "bg-accent text-black font-semibold shadow-md"
-                    : "text-text-primary hover:text-white hover:bg-white/10 border border-white/10"
-                }`}
-              >
-                {div.short}
-              </button>
-            ))}
-          </div>
+        <div className="kuru-pricing-intro">
+          <h2 id="kuru-pricing-heading" className="kuru-h2">
+            Pricing
+          </h2>
+          <p className="kuru-lead">
+            Four divisions, one team. Every price is a starting point in US dollars, and each project is quoted on its actual scope before work begins.
+          </p>
         </div>
 
-        {/* Division Summary */}
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h3 className="font-display text-2xl font-medium text-white">
-              {current.name}
-            </h3>
-            <p className="text-sm text-text-primary mt-1 max-w-xl">
-              {current.summary}
-            </p>
-          </div>
-          <span className="rounded-full bg-white/5 border border-white/10 px-3.5 py-1 text-xs font-mono text-text-muted">
-            {current.note}
-          </span>
-        </div>
-
-        {/* Tiers List using .kuru-tier styling */}
-        <div className="kuru-tiers mt-10">
-          {current.tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className="kuru-tier group"
+        {/* Stacked Cards Deck on Scroll */}
+        <div className="kuru-stack relative">
+          {DIVISIONS.map((division, index) => (
+            <article
+              key={division.id}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              className="kuru-division"
+              id={`pricing-${division.id}`}
+              style={{ "--i": index } as React.CSSProperties}
+              aria-labelledby={`kuru-division-${index}`}
             >
-              <div className="kuru-tier-name font-display text-lg text-white group-hover:text-accent transition-colors">
-                {tier.name}
-              </div>
-
-              <div className="kuru-tier-text">
-                <p>{tier.desc}</p>
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
-                  {tier.highlights.map((h) => (
-                    <span key={h} className="inline-flex items-center gap-1.5">
-                      <Check className="h-3.5 w-3.5 text-accent" />
-                      <span>{h}</span>
-                    </span>
-                  ))}
+              <div className="kuru-division-card">
+                {/* Division Info & CTA */}
+                <div className="kuru-division-head">
+                  <p className="kuru-division-index">
+                    {pad(index + 1)} <span>/ {pad(DIVISIONS.length)}</span>
+                  </p>
+                  <h3 id={`kuru-division-${index}`} className="kuru-division-name">
+                    {division.name}
+                  </h3>
+                  <p className="kuru-division-summary">{division.summary}</p>
+                  <p className="kuru-division-note">{division.note}</p>
+                  <Link className="kuru-button mt-6" href="/#pricing">
+                    <RollingText text="Start a project" />
+                  </Link>
                 </div>
-              </div>
 
-              <div className="kuru-tier-price text-accent font-display">
-                <span>{tier.price}</span>
-                {tier.period && <small className="text-white/60">{tier.period}</small>}
+                {/* Tiers List */}
+                <div className="kuru-division-body">
+                  <ul className="kuru-tiers">
+                    {division.tiers.map((tier) => (
+                      <li key={tier.name}>
+                        <Link className="kuru-tier" href={tier.href}>
+                          <span className="kuru-tier-name">{tier.name}</span>
+                          <span className="kuru-tier-text">{tier.text}</span>
+                          <span className="kuru-tier-price">
+                            <small>from</small>
+                            <span>{tier.price}</span>
+                            {tier.per && <small>{tier.per}</small>}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Large Background Watermark Numeral */}
+                <span className="kuru-division-numeral" aria-hidden="true">
+                  {pad(index + 1)}
+                </span>
               </div>
-            </div>
+            </article>
           ))}
-        </div>
-
-        {/* Custom enterprise or tailored package banner */}
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-between rounded-2xl border border-white/10 bg-[#121212] p-6 sm:p-8 gap-6">
-          <div>
-            <h4 className="font-display text-lg font-medium text-white">
-              Have specific constraints or custom multi-system requirements?
-            </h4>
-            <p className="text-xs sm:text-sm text-text-muted mt-1">
-              We scope multi-stage enterprise architectures, legacy migrations, and custom AI deployments.
-            </p>
-          </div>
-          <Button asChild className="rounded-full px-6 font-semibold shrink-0">
-            <Link href="mailto:contact@kurulabs.com">
-              Request Discovery Scope
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
         </div>
       </div>
     </section>

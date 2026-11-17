@@ -1,123 +1,135 @@
+"use client";
+
 import * as React from "react";
-import { Gauge, Sparkles, TrendingUp, ShieldCheck, Zap } from "lucide-react";
-import { Container } from "@/components/ui/container";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { RollingText } from "@/components/ui/rolling-text";
 
-export interface ImpactStatsProps {
-  className?: string;
-}
+const ROW1_COVERS = [
+  "/kuru/showcase/cover-flow.webp",
+  "/kuru/showcase/cover-meridian.webp",
+  "/kuru/showcase/cover-analytics.webp",
+  "/kuru/showcase/cover-health.webp",
+  "/intro/84a40757.webp",
+  "/intro/f3ec6156.webp",
+];
 
-export function ImpactStats({ className }: ImpactStatsProps) {
-  const metrics = [
-    {
-      value: "4.2x",
-      label: "Deployment Velocity",
-      sublabel: "From initial sprint to live production delivery",
-      accent: true,
-    },
-    {
-      value: "< 80ms",
-      label: "Global Edge Latency",
-      sublabel: "Real-time responses delivered from closest points of presence",
-      accent: false,
-    },
-    {
-      value: "99.98%",
-      label: "System Availability",
-      sublabel: "Fault-tolerant architectures with automatic failover",
-      accent: false,
-    },
-    {
-      value: "$0",
-      label: "Vendor Royalty Fee",
-      sublabel: "Zero licensing overhead — you own 100% of the software",
-      accent: true,
-    },
-  ];
+const ROW2_COVERS = [
+  "/intro/f5b3fbda.webp",
+  "/kuru/showcase/cover-agent.webp",
+  "/kuru/showcase/cover-code.webp",
+  "/kuru/showcase/cover-tarn.webp",
+  "/intro/a295b880.webp",
+  "/intro/5fa548c7.webp",
+  "/kuru/showcase/cover-norholm.webp",
+];
 
+export function ImpactStats() {
   return (
-    <section className={cn("relative py-24 md:py-32 bg-black border-t border-white/[0.08]", className)}>
-      <Container size="wide" className="space-y-16">
-        {/* Banner Header */}
-        <div className="text-center max-w-[800px] mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/20 bg-accent/5 text-accent text-xs font-mono tracking-widest uppercase">
-            <Zap className="h-3 w-3" />
-            Performance Benchmark
-          </div>
-          <h2 className="font-display text-[40px] sm:text-[56px] md:text-[72px] font-semibold text-white tracking-[-0.04em] leading-tight">
-            Launch faster. <br className="hidden sm:inline" />
-            <span className="text-accent">Operate smarter.</span>
-          </h2>
-          <p className="text-text-muted text-[16px] md:text-[18px] leading-relaxed">
-            Legacy agencies bill hundreds of manual hours for slow results. We fuse modern engineering frameworks with autonomous tooling to deliver institutional software at startup speed.
-          </p>
-        </div>
-
-        {/* 4 Big Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {metrics.map((item, idx) => (
-            <Card
-              key={idx}
-              variant="default"
-              className="p-8 rounded-xl border border-white/10 bg-[#141414] hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-6"
-            >
-              <div className="space-y-2">
-                <span className="font-mono text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-                  {item.value}
-                </span>
-                <div className="text-lg font-medium text-white tracking-tight pt-2">
-                  {item.label}
-                </div>
+    <section
+      aria-labelledby="intro-heading"
+      className="relative isolate z-10 bg-black overflow-hidden border-t border-b border-white/10"
+    >
+      <div className="mx-auto max-w-[1440px] px-6 md:px-8">
+        <div className="relative h-[680px] sm:h-[760px] lg:h-[820px]">
+          {/* Background Image Carousel Tracks with Subtle Ambient Glow */}
+          <div className="pointer-events-none absolute inset-0 flex flex-col gap-3 overflow-hidden opacity-35 sm:opacity-45 select-none">
+            {/* Track 1: Moving Right */}
+            <div className="flex min-h-0 flex-1 overflow-hidden" style={{ paddingLeft: "260px" }}>
+              <div className="flex h-full w-max shrink-0 animate-marquee gap-3">
+                {ROW1_COVERS.concat(ROW1_COVERS).map((src, idx) => (
+                  <div
+                    key={`row1-${idx}`}
+                    className="relative h-full w-auto aspect-[4/3] shrink-0 overflow-hidden rounded-xl bg-[#141414] border border-white/5"
+                  >
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 300px, 500px"
+                    />
+                  </div>
+                ))}
               </div>
-              <p className="text-text-muted text-xs leading-relaxed border-t border-white/10 pt-4">
-                {item.sublabel}
+            </div>
+
+            {/* Track 2: Moving Left */}
+            <div className="flex min-h-0 flex-1 overflow-hidden" style={{ paddingLeft: "100px" }}>
+              <div
+                className="flex h-full w-max shrink-0 gap-3"
+                style={{
+                  animation: "marquee 35s linear infinite reverse",
+                }}
+              >
+                {ROW2_COVERS.concat(ROW2_COVERS).map((src, idx) => (
+                  <div
+                    key={`row2-${idx}`}
+                    className="relative h-full w-auto aspect-[4/3] shrink-0 overflow-hidden rounded-xl bg-[#141414] border border-white/5"
+                  >
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 300px, 500px"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Gradient Masks ensuring text legibility */}
+          <div
+            className="pointer-events-none absolute inset-0 z-10"
+            style={{
+              background:
+                "linear-gradient(90deg, #000 0%, rgba(0,0,0,0.92) 36%, rgba(0,0,0,0.6) 65%, transparent 100%)",
+            }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 z-10"
+            style={{
+              background:
+                "linear-gradient(180deg, #000 0%, transparent 20%, transparent 80%, #000 100%)",
+            }}
+          />
+
+          {/* Foreground Left-Aligned Intro Copy */}
+          <div className="relative z-20 flex h-full items-center sm:items-start sm:pt-[130px] px-2 sm:px-4">
+            <div className="max-w-xl">
+              <h2
+                id="intro-heading"
+                className="font-display text-[clamp(40px,5.6vw,72px)] leading-[1.04] font-medium tracking-[-0.06em] text-white"
+              >
+                Launch faster
+                <br />
+                <span className="text-white/85">Operate smarter</span>
+              </h2>
+
+              <p className="mt-4 max-w-[460px] text-base sm:text-lg leading-relaxed text-text-muted">
+                YoYa Tech partners with startups, founders and growing companies to turn ideas into scalable digital products and efficient business systems. Strategy, engineering, automation and digital execution, from one team.
               </p>
-            </Card>
-          ))}
-        </div>
 
-        {/* Interactive Comparison HUD */}
-        <div className="rounded-2xl border border-white/10 bg-[#0c0d0c] p-6 md:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
-            <div>
-              <h3 className="text-xl font-medium text-white">Traditional Dev vs. Kuru Labs</h3>
-              <p className="text-text-muted text-sm mt-1">Direct comparison of operational throughput and build cycle</p>
-            </div>
-            <div className="flex items-center gap-4 text-xs font-mono">
-              <span className="flex items-center gap-1.5 text-text-muted">
-                <span className="h-2 w-2 rounded-full bg-white/40" /> Traditional Agency
-              </span>
-              <span className="flex items-center gap-1.5 text-accent">
-                <span className="h-2 w-2 rounded-full bg-accent" /> Kuru Labs
-              </span>
-            </div>
-          </div>
-
-          <div className="space-y-5">
-            <div>
-              <div className="flex justify-between text-xs font-mono mb-2">
-                <span className="text-text-primary">Sprint Delivery Speed</span>
-                <span className="text-accent font-semibold">12-18 days (Kuru) vs 3-6 months (Traditional)</span>
-              </div>
-              <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden flex">
-                <div className="h-full bg-accent rounded-full w-[85%]" />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex justify-between text-xs font-mono mb-2">
-                <span className="text-text-primary">Automated CI/CD & Test Automation</span>
-                <span className="text-accent font-semibold">100% Automated Testing Pipeline</span>
-              </div>
-              <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden flex">
-                <div className="h-full bg-accent rounded-full w-[95%]" />
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link
+                  href="#pricing"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-5 sm:px-6 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-medium text-black transition-all hover:bg-gray-light active:scale-[0.98] shadow-sm min-w-[120px]"
+                >
+                  <RollingText text="About Us" />
+                </Link>
+                <Link
+                  href="#works"
+                  className="inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-medium text-white transition-all hover:border-white/40 hover:bg-white/5 active:scale-[0.98] min-w-[130px]"
+                >
+                  <RollingText text="See our work" />
+                </Link>
               </div>
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
-

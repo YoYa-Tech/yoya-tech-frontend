@@ -4,6 +4,7 @@ import * as React from "react";
 
 const clamp = (val: number) => Math.max(0, Math.min(1, val));
 const center = { x: 52, y: 46 };
+
 const vertices = [
   { x: 18, y: 0 },
   { x: 48, y: 0 },
@@ -16,12 +17,14 @@ const vertices = [
   { x: 0, y: 70 },
   { x: 0, y: 25 },
 ];
+
 const corners: Record<number, { x: number; y: number }> = {
   2: { x: 100, y: 0 },
   4: { x: 100, y: 100 },
   7: { x: 0, y: 100 },
   9: { x: 0, y: 0 },
 };
+
 const bends = [3, -2.5, 2, -3, 2.5, -2, 3, -2.5, 2, -3];
 
 function midpoint(index: number) {
@@ -71,6 +74,8 @@ const ENTRY_NEAR = -24;
 
 export function LetsBuildCollision() {
   const sectionRef = React.useRef<HTMLElement | null>(null);
+  const stickyRef = React.useRef<HTMLDivElement | null>(null);
+  const contentRef = React.useRef<HTMLDivElement | null>(null);
   const leftRef = React.useRef<HTMLSpanElement | null>(null);
   const rightRef = React.useRef<HTMLSpanElement | null>(null);
   const mainRef = React.useRef<HTMLHeadingElement | null>(null);
@@ -86,9 +91,54 @@ export function LetsBuildCollision() {
 
   React.useEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
+    const sticky = stickyRef.current;
+    const left = leftRef.current;
+    const right = rightRef.current;
+    const main = mainRef.current;
+    const tagline = taglineRef.current;
+    const hint = hintRef.current;
+    const fill = fillRef.current;
+    const field = fieldRef.current;
+    const content = contentRef.current;
+
+    if (!section || !sticky || !left || !right || !main || !tagline || !hint || !fill || !field || !content) return;
 
     let collided = false;
+    let frame = 0;
+    let inView = false;
+    let geometry: {
+      from: number;
+      to: number;
+      y: number;
+      width: number;
+      height: number;
+      taglineShift: number;
+      taglineScale: number;
+    } | null = null;
+
+    const fieldPaths = Array.from(field.querySelectorAll("path"));
+
+    function measureLayout() {
+      if (!sticky || !left || !right || !main || !tagline || !content) return;
+      const origin = content.offsetLeft + (left.offsetParent as HTMLElement)?.offsetLeft || 0;
+      const leftParent = left.offsetParent as HTMLElement;
+      const mainParent = main.offsetParent as HTMLElement;
+
+      geometry = {
+        from: origin + left.offsetLeft + left.offsetWidth,
+        to: origin + right.offsetLeft,
+        y: content.offsetTop + (leftParent?.offsetTop || 0) + left.offsetTop + left.offsetHeight / 2,
+        width: sticky.clientWidth,
+        height: sticky.clientHeight,
+        taglineShift:
+          (mainParent?.offsetTop || 0) +
+          main.offsetTop +
+          main.offsetHeight / 2 -
+          (tagline.offsetTop + tagline.offsetHeight / 2),
+        taglineScale: Math.max(1, Math.min(1.9, (sticky.clientWidth - 48) / (tagline.offsetWidth || 1))),
+      };
+      field?.setAttribute("viewBox", `0 0 ${geometry.width} ${geometry.height}`);
+    }
 
     function triggerCollision() {
       const options: KeyframeAnimationOptions = {
@@ -105,6 +155,18 @@ export function LetsBuildCollision() {
         duration: 450,
         easing: "ease-out",
       });
+
+      content?.animate(
+        [
+          { transform: "translate(0,0)" },
+          { transform: "translate(-10px,6px)" },
+          { transform: "translate(8px,-5px)" },
+          { transform: "translate(-5px,3px)" },
+          { transform: "translate(3px,-2px)" },
+          { transform: "translate(0,0)" },
+        ],
+        { duration: 500, easing: "ease-out" }
+      );
 
       if (piecesContainerRef.current) {
         const children = Array.from(piecesContainerRef.current.children);
@@ -124,11 +186,40 @@ export function LetsBuildCollision() {
       }
     }
 
-    function onScroll() {
-      if (!section) return;
+    function drawField(progress: number, entry: number, appear: number) {
+      if (!field || !geometry) return;
+      const visible = appear * clamp(1 - (progress - 0.43) / 0.03);
+      field.style.opacity = visible.toFixed(3);
+      if (!visible) return;
+
+      const shift = (entry * geometry.width) / 100;
+      const from = geometry.from + shift;
+      const to = geometry.to - shift;
+      const gap = Math.max(to - from, 0);
+      const y = geometry.y;
+      const pull = 1 - clamp(gap / (geometry.width * 0.9));
+      field.style.setProperty("--pull", pull.toFixed(3));
+
+      fieldPaths.forEach((path, index) => {
+        const lane = index - (FIELD_LINES - 1) / 2;
+        const bulge = lane * gap * (0.16 - pull * 0.08);
+        const reach = gap * 0.32;
+        path.setAttribute(
+          "d",
+          `M${from.toFixed(1)} ${y.toFixed(1)}C${(from + reach).toFixed(1)} ${(y + bulge).toFixed(1)} ${(to - reach).toFixed(1)} ${(y + bulge).toFixed(1)} ${to.toFixed(1)} ${y.toFixed(1)}`
+        );
+      });
+    }
+
+    function render() {
+      frame = 0;
+      if (!inView || !section) return;
+
       const bounds = section.getBoundingClientRect();
       const progress = clamp(-bounds.top / (bounds.height - window.innerHeight));
       const rise = clamp(1 - bounds.top / window.innerHeight);
+
+      if (!geometry) measureLayout();
 
       const entry =
         progress === 0
@@ -138,15 +229,9 @@ export function LetsBuildCollision() {
           : 1.2 * (1 - clamp((progress - 0.42) / 0.03));
       const skew = 12 * (1 - clamp(progress / 0.45));
 
-      if (leftRef.current) {
-        leftRef.current.style.transform = `translateX(${entry}vw) skewX(${-skew}deg)`;
-      }
-      if (rightRef.current) {
-        rightRef.current.style.transform = `translateX(${-entry}vw) skewX(${skew}deg)`;
-      }
-      if (mainRef.current) {
-        mainRef.current.style.opacity = progress < 0.62 ? "1" : "0";
-      }
+      if (left) left.style.transform = `translateX(${entry}vw) skewX(${-skew}deg)`;
+      if (right) right.style.transform = `translateX(${-entry}vw) skewX(${skew}deg)`;
+      if (main) main.style.opacity = progress < 0.62 ? "1" : "0";
 
       if (progress >= 0.45 && !collided) {
         collided = true;
@@ -156,7 +241,27 @@ export function LetsBuildCollision() {
         collided = false;
       }
 
-      // Shards explosion
+      drawField(progress, entry, progress > 0 ? 1 : clamp((rise - 0.35) / 0.4));
+
+      // Tagline reveal and lift into center stage
+      const arrive = clamp((progress - 0.46) / 0.07);
+      const settle = clamp((progress - 0.76) / 0.14);
+      const lift = settle * settle * (3 - 2 * settle);
+
+      if (tagline && geometry) {
+        tagline.style.opacity = String(arrive);
+        tagline.style.transform = `translateY(${((1 - arrive) * 12 + lift * geometry.taglineShift).toFixed(1)}px) scale(${1 + lift * (geometry.taglineScale - 1)})`;
+        tagline.style.color = lift > 0.5 ? "var(--build-foreground)" : "";
+      }
+
+      if (hint) {
+        hint.style.opacity = String(clamp(1 - (progress - 0.45) / 0.12));
+      }
+      if (fill) {
+        fill.style.transform = `scaleX(${clamp(progress / 0.45).toFixed(3)})`;
+      }
+
+      // Shards explosion & fall
       shardRefs.current.forEach((node, index) => {
         if (!node) return;
         const shard = shards[index];
@@ -166,38 +271,46 @@ export function LetsBuildCollision() {
           progress < 0.62 ? "0" : String(p < 0.65 ? 1 : clamp(1 - (p - 0.65) / 0.35));
         node.style.transform = `translate(${separate * shard.separationX + p * shard.drift}vw,${separate * shard.separationY + p * p * shard.fall}vh) rotate(${p * p * shard.rotation}deg)`;
       });
+    }
 
-      // Tagline reveal
-      const arrive = clamp((progress - 0.46) / 0.07);
-      if (taglineRef.current) {
-        taglineRef.current.style.opacity = String(arrive);
-        taglineRef.current.style.transform = `translateY(${(1 - arrive) * 16}px)`;
-      }
-
-      // Scroll fill meter
-      if (fillRef.current) {
-        fillRef.current.style.transform = `scaleX(${clamp(progress / 0.45)})`;
-      }
-      if (hintRef.current) {
-        hintRef.current.style.opacity = String(clamp(1 - (progress - 0.45) / 0.12));
+    function schedule() {
+      if (!frame && inView) {
+        frame = requestAnimationFrame(render);
       }
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    function onResize() {
+      geometry = null;
+      schedule();
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      inView = entries[entries.length - 1].isIntersecting;
+      schedule();
+    });
+
+    observer.observe(section);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+
+    document.fonts?.ready.then(onResize);
+    render();
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="kuru-build relative h-[250vh] bg-black text-[#f3f4ec] isolate overflow-hidden"
+      className="kuru-build"
       aria-label="Let’s build"
     >
-      <div className="kuru-build-sticky sticky top-0 flex h-screen items-center justify-center overflow-hidden">
+      <div ref={stickyRef} className="kuru-build-sticky">
         {/* Shockwave Rings */}
         <div ref={ringRef} className="kuru-build-ring" aria-hidden="true" />
         <div ref={echoRef} className="kuru-build-ring kuru-build-ring-echo" aria-hidden="true" />
@@ -210,7 +323,7 @@ export function LetsBuildCollision() {
           ))}
         </div>
 
-        {/* Dynamic Field SVG */}
+        {/* Dynamic Magnetic Field Lines SVG */}
         <svg ref={fieldRef} className="kuru-build-field" aria-hidden="true">
           {Array.from({ length: FIELD_LINES }).map((_, i) => (
             <path key={i} />
@@ -218,18 +331,11 @@ export function LetsBuildCollision() {
         </svg>
 
         {/* Main Content & Words */}
-        <div className="kuru-build-content relative z-10 w-full px-6 text-center">
-          <div className="kuru-build-type relative">
-            <h2 ref={mainRef} className="kuru-build-words font-display text-[clamp(4rem,14vw,14rem)] font-medium tracking-tight">
-              <span ref={leftRef} className="inline-block transition-transform duration-75">
-                Let’s
-              </span>
-              <span
-                ref={rightRef}
-                className="kuru-build-green inline-block text-accent italic font-serif transition-transform duration-75"
-              >
-                build
-              </span>
+        <div ref={contentRef} className="kuru-build-content">
+          <div className="kuru-build-type">
+            <h2 ref={mainRef} className="kuru-build-words">
+              <span ref={leftRef}>Let’s</span>
+              <span ref={rightRef} className="kuru-build-green">build</span>
             </h2>
 
             {/* Shards */}
@@ -246,31 +352,27 @@ export function LetsBuildCollision() {
                   transformOrigin: shard.origin,
                 }}
               >
-                <div className="kuru-build-words font-display text-[clamp(4rem,14vw,14rem)] font-medium tracking-tight">
+                <div className="kuru-build-words">
                   <span>Let’s</span>
-                  <span className="kuru-build-green text-accent italic font-serif">build</span>
+                  <span className="kuru-build-green">build</span>
                 </div>
               </div>
             ))}
           </div>
 
-          <p
-            ref={taglineRef}
-            className="kuru-build-tagline mx-auto mt-6 max-w-xl text-xl sm:text-2xl text-white/80 font-normal transition-all"
-          >
-            Ideas into reliable, long-running systems.
+          <p ref={taglineRef} className="kuru-build-tagline">
+            Ideas into reliable systems
           </p>
         </div>
 
-        {/* Scroll down prompt */}
-        <div ref={hintRef} className="kuru-build-scroll absolute bottom-8 flex flex-col items-center gap-2 text-xs font-mono text-white/50" aria-hidden="true">
+        {/* Scroll Track Hint */}
+        <div ref={hintRef} className="kuru-build-scroll" aria-hidden="true">
           <span>Scroll</span>
-          <span className="kuru-build-track h-10 w-[2px] bg-white/20 overflow-hidden rounded-full">
-            <span ref={fillRef} className="kuru-build-fill block h-full w-full bg-accent origin-top scale-y-0 transition-transform" />
+          <span className="kuru-build-track">
+            <span ref={fillRef} className="kuru-build-fill" />
           </span>
         </div>
       </div>
     </section>
   );
 }
-

@@ -1,161 +1,176 @@
-import * as React from "react";
-import { ToolIcon } from "@/components/ui/tool-icon";
-import {
-  Rocket,
-  GitBranch,
-  Bot,
-  Server,
-  AppWindow,
-  Blocks,
-  ArrowRight,
-} from "lucide-react";
+"use client";
 
-const OUTCOMES = [
+import * as React from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
+interface Outcome {
+  icon: "rocket" | "workflow" | "bot" | "server" | "window" | "blocks";
+  title: string;
+  desc: string;
+}
+
+const OUTCOMES: Outcome[] = [
   {
-    icon: Rocket,
+    icon: "rocket",
     title: "Launch new products and platforms",
     desc: "From first idea to launch day, with strategy, design and engineering in one team.",
-    num: "01",
   },
   {
-    icon: GitBranch,
+    icon: "workflow",
     title: "Streamline operations and workflows",
     desc: "Map how work moves through the business and take out the steps that slow it down.",
-    num: "02",
   },
   {
-    icon: Bot,
+    icon: "bot",
     title: "Automate repetitive business processes",
     desc: "Hand routine tasks to automations and AI, so people spend their time on the work that matters.",
-    num: "03",
   },
   {
-    icon: Server,
+    icon: "server",
     title: "Build scalable digital infrastructure",
     desc: "Platforms, data and integrations that keep up with growth without a rebuild.",
-    num: "04",
   },
   {
-    icon: AppWindow,
-    title: "Improve digital presence & customer experience",
-    desc: "Websites and customer touchpoints that are fast, clear and intuitive to use.",
-    num: "05",
+    icon: "window",
+    title: "Improve digital presence and customer experience",
+    desc: "Websites and customer touchpoints that are fast, clear and easy to use.",
   },
   {
-    icon: Blocks,
+    icon: "blocks",
     title: "Transform ideas into reliable systems",
-    desc: "Turn plans on paper into dependable software that runs securely every single day.",
-    num: "06",
+    desc: "Turn plans on paper into dependable software that runs every day.",
   },
 ];
 
-const PLATFORMS = [
-  { name: "Webflow", slug: "webflow" },
-  { name: "WordPress", slug: "wordpress" },
-  { name: "Wix Studio", slug: "wix" },
-  { name: "Shopify", slug: "shopify" },
-  { name: "Framer", slug: "framer" },
-  { name: "Next.js", slug: "nextdotjs" },
-  { name: "React", slug: "react" },
-  { name: "Flutter", slug: "flutter" },
-  { name: "Node.js", slug: "nodedotjs" },
-  { name: "Python", slug: "python" },
-  { name: "Laravel", slug: "laravel" },
-  { name: "Supabase", slug: "supabase" },
-  { name: "PostgreSQL", slug: "postgresql" },
-  { name: "Docker", slug: "docker" },
-  { name: "Google Cloud", slug: "googlecloud" },
-  { name: "n8n", slug: "n8n" },
-  { name: "Hugging Face", slug: "huggingface" },
-  { name: "Claude", slug: "claude" },
-];
+const ICON_SVGS: Record<string, React.ReactNode> = {
+  rocket: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  ),
+  workflow: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect width="8" height="8" x="3" y="3" rx="2" />
+      <path d="M7 11v4a2 2 0 0 0 2 2h4" />
+      <rect width="8" height="8" x="13" y="13" rx="2" />
+    </svg>
+  ),
+  bot: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 8V4H8" />
+      <rect width="16" height="12" x="4" y="8" rx="2" />
+      <path d="M2 14h2M20 14h2M15 13v2M9 13v2" />
+    </svg>
+  ),
+  server: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect width="20" height="8" x="2" y="2" rx="2" />
+      <rect width="20" height="8" x="2" y="14" rx="2" />
+      <path d="M6 6h.01M6 18h.01" />
+    </svg>
+  ),
+  window: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="M2 9h20M6 4v5M10 4v5" />
+    </svg>
+  ),
+  blocks: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect width="7" height="7" x="14" y="3" rx="1" />
+      <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
+    </svg>
+  ),
+};
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export function BusinessOutcomes() {
+  const rowRefs = React.useRef<(HTMLLIElement | null)[]>([]);
+  const [scrollActiveIndex, setScrollActiveIndex] = React.useState<number>(0);
+  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    // Focus observer tracks the outcome nearest the middle of the viewport
+    const focusObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const idx = rowRefs.current.indexOf(entry.target as HTMLLIElement);
+            if (idx !== -1) {
+              setScrollActiveIndex(idx);
+            }
+          }
+        }
+      },
+      { rootMargin: "-47% 0px -47% 0px" }
+    );
+
+    rowRefs.current.forEach((row) => {
+      if (row) {
+        focusObserver.observe(row);
+      }
+    });
+
+    return () => {
+      focusObserver.disconnect();
+    };
+  }, []);
+
+  const currentActive = hoveredIndex !== null ? hoveredIndex : scrollActiveIndex;
+
   return (
-    <section className="relative z-10 border-b border-white/5 bg-black py-28 sm:py-36">
-      <div className="mx-auto max-w-[1316px] px-6">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 items-start">
-          {/* Left Column: Outcomes List */}
-          <div className="lg:col-span-7 space-y-12">
-            <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-accent">
-                // MEASURABLE IMPACT
-              </span>
-              <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white leading-[1.15]">
-                What we help businesses achieve
-              </h2>
-              <p className="mt-4 text-base sm:text-lg text-text-primary leading-relaxed max-w-xl">
-                We engineer systems that reduce operational overhead, automate manual tasks, and accelerate product velocity.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {OUTCOMES.map((item) => {
-                const IconComponent = item.icon;
-                return (
-                  <div
-                    key={item.num}
-                    className="group rounded-xl border border-white/10 bg-[#121212] p-5 transition-all duration-300 hover:border-accent/40 hover:bg-[#161616]"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-black/60 border border-white/10 text-accent">
-                        <IconComponent className="h-5 w-5" />
-                      </div>
-                      <span className="font-mono text-xs text-text-muted group-hover:text-accent transition-colors">
-                        {item.num}
-                      </span>
-                    </div>
-                    <h3 className="font-display text-base font-medium text-white group-hover:text-accent transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm leading-relaxed text-text-primary">
-                      {item.desc}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Right Column: Platform Grid Matrix */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="rounded-2xl border border-white/10 bg-[#121212] p-6 sm:p-8">
-              <span className="font-mono text-xs uppercase tracking-widest text-accent">
-                // COMPATIBILITY
-              </span>
-              <h3 className="mt-2 font-display text-2xl font-medium text-white">
-                Any stack, one standard
-              </h3>
-              <p className="mt-2 text-xs sm:text-sm text-text-primary leading-relaxed">
-                We build across your existing tech ecosystem or select the most maintainable tools for your specific workload.
-              </p>
-
-              {/* 18 Platforms Grid using .kuru-platforms styling */}
-              <ul className="kuru-platforms mt-6" aria-label="Platforms we build on">
-                {PLATFORMS.map((platform) => (
-                  <li key={platform.name} title={platform.name} className="group cursor-default">
-                    <ToolIcon
-                      slug={platform.slug}
-                      size={26}
-                      className="text-white/60 transition-colors group-hover:text-accent"
-                    />
-                    <span className="font-medium group-hover:text-white transition-colors">
-                      {platform.name}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6 flex items-center justify-between rounded-xl border border-white/10 bg-black/50 p-4 text-xs font-mono">
-                <span className="text-text-muted">Need custom integration?</span>
-                <span className="text-accent flex items-center gap-1 font-semibold">
-                  REST · GraphQL · Webhooks
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </span>
-              </div>
-            </div>
-          </div>
+    <section className="kuru-outcomes bg-black text-white" aria-labelledby="kuru-outcomes-heading">
+      <div className="kuru-wrap kuru-outcomes-grid">
+        {/* Sticky Intro on the Left */}
+        <div className="kuru-outcomes-intro">
+          <h2 id="kuru-outcomes-heading" className="kuru-h2">
+            What we help businesses <span className="kuru-accent kuru-ink">achieve</span>
+          </h2>
+          <p className="kuru-lead">
+            From customer-facing platforms to internal workflows, we design and build solutions that remove friction and unlock opportunities.
+          </p>
+          <Link
+            className="kuru-text-link group mt-8 inline-flex items-center gap-2 text-sm text-text-muted hover:text-white transition-colors"
+            href="#pricing"
+          >
+            <span>More about YoYa Tech</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          </Link>
         </div>
+
+        {/* 6 Outcomes List with Active Scroll Highlight & Hover Expansion on the Right */}
+        <ol
+          className="kuru-outcomes-list"
+          onMouseLeave={() => setHoveredIndex(null)}
+        >
+          {OUTCOMES.map((item, index) => {
+            const isActive = index === currentActive;
+            return (
+              <li
+                key={item.title}
+                ref={(el) => {
+                  rowRefs.current[index] = el;
+                }}
+                className={`kuru-outcome group ${isActive ? "data-active" : ""}`}
+                data-active={isActive ? "true" : undefined}
+                onMouseEnter={() => setHoveredIndex(index)}
+              >
+                <span className="kuru-outcome-index">{pad(index + 1)}</span>
+                <span className="kuru-outcome-icon">{ICON_SVGS[item.icon]}</span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+                <span className="kuru-outcome-line" aria-hidden="true" />
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
