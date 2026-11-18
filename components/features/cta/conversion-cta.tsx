@@ -61,11 +61,11 @@ export function ConversionCTA() {
           </a>
 
           <a
-            href="mailto:info@yoyatech.com"
+            href="mailto:info@yoya.dev"
             className="flex items-center gap-2 rounded-full border border-border bg-bg-surface px-4 py-2 text-text-muted transition-colors hover:border-accent hover:text-text-secondary"
           >
             <Mail className="h-3.5 w-3.5 text-accent" strokeWidth={1.5} />
-            <span>info@yoyatech.com</span>
+            <span>info@yoya.dev</span>
           </a>
         </div>
       </div>

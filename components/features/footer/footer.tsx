@@ -255,11 +255,11 @@ export function Footer() {
 
               <div className="pt-2">
                 <a
-                  href="mailto:info@yoyatech.com"
+                  href="mailto:info@yoya.dev"
                   className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-[#0e1015] px-3.5 py-2 text-xs font-mono text-[#8a8f98] transition-colors hover:border-white/30 hover:text-white"
                 >
                   <Mail className="h-3.5 w-3.5 text-[#05c4f5]" />
-                  <span>info@yoyatech.com</span>
+                  <span>info@yoya.dev</span>
                 </a>
               </div>
             </div>
