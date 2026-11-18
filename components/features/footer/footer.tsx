@@ -155,6 +155,7 @@ export function Footer() {
                     src="/yoya_tech_logos/SVG/onlylogo.svg"
                     alt="YoYa Tech"
                     fill
+                    sizes="28px"
                     className="object-contain"
                   />
                 </div>

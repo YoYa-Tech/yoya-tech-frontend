@@ -26,16 +26,13 @@ function ThemeSwitch({
   className?: string;
   isOverHero?: boolean;
 }) {
-  const [theme, setTheme] = React.useState<"dark" | "light">(() => {
-    if (typeof document !== "undefined") {
-      return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
-    }
-    return "dark";
-  });
+  const [theme, setTheme] = React.useState<"dark" | "light">("dark");
+  const [mounted, setMounted] = React.useState(false);
   const btnRef = React.useRef<HTMLButtonElement>(null);
   const isTransitioningRef = React.useRef(false);
 
   React.useEffect(() => {
+    setMounted(true);
     const syncTheme = () => {
       const current = document.documentElement.getAttribute("data-theme") as "dark" | "light" | null;
       if (current && (current === "dark" || current === "light")) {
@@ -54,7 +51,11 @@ function ThemeSwitch({
 
   const toggleTheme = React.useCallback(() => {
     if (isTransitioningRef.current) return;
-    const nextTheme = theme === "dark" ? "light" : "dark";
+    const currentTheme =
+      (typeof document !== "undefined" &&
+        (document.documentElement.getAttribute("data-theme") as "dark" | "light" | null)) ||
+      theme;
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
 
     const applyTheme = () => {
       document.documentElement.setAttribute("data-theme", nextTheme);
@@ -120,21 +121,24 @@ function ThemeSwitch({
       .catch(() => { });
   }, [theme]);
 
+  const effectiveTheme = mounted ? theme : "dark";
+
   return (
     <button
       ref={btnRef}
       onClick={toggleTheme}
       type="button"
       role="switch"
-      aria-checked={theme === "light"}
-      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+      suppressHydrationWarning
+      aria-checked={effectiveTheme === "light"}
+      aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"} mode`}
       className={`group relative inline-grid size-9 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-brand ${isOverHero
           ? "border-white/15 bg-white/5 text-white/80 hover:border-accent hover:text-accent hover:bg-white/10"
           : "border-line bg-surface/60 text-fg hover:border-accent hover:text-accent hover:bg-surface shadow-sm"
         } ${className}`}
     >
-      <span className="sr-only">
-        {theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      <span className="sr-only" suppressHydrationWarning>
+        {effectiveTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       </span>
       <Sun
         className="size-4 shrink-0 transition-transform duration-300 group-hover:rotate-45 hidden dark:block"
@@ -253,6 +257,7 @@ export function Navbar() {
                 src="/kuru/images/mark-green.svg"
                 alt="Kuru Labs"
                 fill
+                sizes="24px"
                 className="object-contain"
                 priority
               />

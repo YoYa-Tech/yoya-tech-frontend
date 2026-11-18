@@ -517,12 +517,14 @@ export function OurApproach() {
                     src="/approach/dial.webp"
                     alt="Analog Dial"
                     fill
+                    sizes="(max-width: 640px) 224px, 256px"
                     className="object-contain hidden dark:block"
                   />
                   <Image
                     src="/approach/dial-light.webp"
                     alt="Analog Dial"
                     fill
+                    sizes="(max-width: 640px) 224px, 256px"
                     className="object-contain block dark:hidden"
                   />
 
@@ -536,6 +538,7 @@ export function OurApproach() {
                         src="/approach/hand-hour.webp"
                         alt="Hour Hand"
                         fill
+                        sizes="(max-width: 640px) 224px, 256px"
                         className="object-contain dark:invert-0 invert transition-[filter] duration-300"
                       />
                     </div>
@@ -551,6 +554,7 @@ export function OurApproach() {
                         src="/approach/hand-minute.webp"
                         alt="Minute Hand"
                         fill
+                        sizes="(max-width: 640px) 224px, 256px"
                         className="object-contain dark:invert-0 invert transition-[filter] duration-300"
                       />
                     </div>
@@ -566,6 +570,7 @@ export function OurApproach() {
                         src="/approach/hand-second.webp"
                         alt="Second Hand"
                         fill
+                        sizes="(max-width: 640px) 224px, 256px"
                         className="object-contain dark:invert-0 invert transition-[filter] duration-300"
                       />
                     </div>
