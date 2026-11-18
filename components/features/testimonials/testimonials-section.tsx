@@ -29,7 +29,7 @@ const TESTIMONIALS: TestimonialItem[] = [
   {
     id: "lasada",
     quote:
-      "I've worked with Kuru Labs on several different occasions and it's always a pleasure. They go through every detail and deliver according to your desires.",
+      "I've worked with YoYa Tech on several different occasions and it's always a pleasure. They go through every detail and deliver according to your desires.",
     name: "Lasada Pippen",
     role: "Keynote Speaker, Author & Entrepreneur",
     company: "United States",
@@ -60,7 +60,7 @@ const TESTIMONIALS: TestimonialItem[] = [
 
 const formatNum = (idx: number) => String(idx + 1).padStart(2, "0");
 
-// Double Quote SVG Icon matching Kuru Labs
+// Double Quote SVG Icon
 function DoubleQuoteIcon({ className = "" }: { className?: string }) {
   const d =
     "M18 4v10c0 7.7-4.6 12.9-11.4 14.9L5 25.6c3.6-1.3 5.8-3.7 6.4-6.6H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h12Z";
@@ -90,7 +90,7 @@ function StarRating({ filled = 5 }: { filled?: number }) {
   );
 }
 
-// Card Inner Glass Highlights matching Kuru Labs
+// Card Inner Glass Highlights
 function CardInnerGlow() {
   return (
     <>

@@ -8,8 +8,8 @@ const DARK_CONFIG = {
   diffuse: 0.55,
   mapBrightness: 4.6,
   baseColor: [0.32, 0.34, 0.38] as [number, number, number],
-  glowColor: [0.09, 0.11, 0.15] as [number, number, number],
-  markerColor: [0.435, 1, 0.329] as [number, number, number],
+  glowColor: [0.03, 0.16, 0.35] as [number, number, number],
+  markerColor: [0.02, 0.77, 0.96] as [number, number, number], // YoYa Tech Electric Cyan (#05c4f5)
 };
 
 const LIGHT_CONFIG = {
@@ -17,8 +17,8 @@ const LIGHT_CONFIG = {
   diffuse: 0.45,
   mapBrightness: 1.3,
   baseColor: [0.74, 0.75, 0.79] as [number, number, number],
-  glowColor: [1, 1, 1] as [number, number, number],
-  markerColor: [0.435, 1, 0.329] as [number, number, number],
+  glowColor: [0.85, 0.92, 1] as [number, number, number],
+  markerColor: [0.01, 0.37, 0.93] as [number, number, number], // YoYa Tech Cobalt Royal Blue (#025ded)
 };
 
 export function TestimonialsGlobe({ className = "" }: { className?: string }) {
@@ -94,13 +94,14 @@ export function TestimonialsGlobe({ className = "" }: { className?: string }) {
         mapSamples: 16000,
         ...configRef.current,
         markers: [
-          { location: [9.03, 38.74], size: 0.08 }, // Addis Ababa
-          { location: [41.9, 12.5], size: 0.08 }, // Rome
-          { location: [37.77, -122.41], size: 0.06 }, // San Francisco
-          { location: [40.71, -74.0], size: 0.06 }, // New York
-          { location: [24.71, 46.67], size: 0.06 }, // Riyadh
-          { location: [51.5, -0.12], size: 0.06 }, // London
-          { location: [25.2, 55.27], size: 0.06 }, // Dubai
+          { location: [9.03, 38.74], size: 0.06 }, // Addis Ababa
+          { location: [41.9, 12.5], size: 0.06 }, // Rome
+          { location: [41.31, -72.93], size: 0.06 }, // New Haven, Connecticut (Coming Soon)
+          { location: [37.77, -122.41], size: 0.045 }, // San Francisco
+          { location: [40.71, -74.0], size: 0.045 }, // New York
+          { location: [24.71, 46.67], size: 0.045 }, // Riyadh
+          { location: [51.5, -0.12], size: 0.045 }, // London
+          { location: [25.2, 55.27], size: 0.045 }, // Dubai
         ],
       });
 
@@ -136,7 +137,7 @@ export function TestimonialsGlobe({ className = "" }: { className?: string }) {
         try {
           const gl = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
           gl?.getExtension("WEBGL_lose_context")?.loseContext();
-        } catch {}
+        } catch { }
       };
     } catch {
       return () => {

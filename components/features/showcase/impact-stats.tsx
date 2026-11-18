@@ -3,6 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { RollingText } from "@/components/ui/rolling-text";
 
 const ROW1_COVERS = [
@@ -113,18 +114,21 @@ export function ImpactStats() {
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Link
-                  href="#pricing"
-                  className="inline-flex items-center justify-center rounded-full bg-fg px-5 sm:px-6 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-medium text-bg transition-colors hover:bg-fg-strong active:scale-[0.98] shadow-sm min-w-[120px]"
+                <Button asChild size="lg" className="rounded-full px-6 sm:px-7 min-w-[140px]">
+                  <Link href="#pricing">
+                    <RollingText text="About Us" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full px-6 sm:px-7 min-w-[140px]"
                 >
-                  <RollingText text="About Us" />
-                </Link>
-                <Link
-                  href="#works"
-                  className="inline-flex items-center justify-center rounded-full border border-line-strong bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-medium text-fg transition-colors hover:bg-surface-hover active:scale-[0.98] min-w-[130px]"
-                >
-                  <RollingText text="See our work" />
-                </Link>
+                  <Link href="#works">
+                    <RollingText text="See our work" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

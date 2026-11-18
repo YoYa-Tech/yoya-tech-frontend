@@ -13,20 +13,22 @@
    refresh the favicon, social card and showcase images, and restart the server.
    ========================================================================== */
 :root {
-  --kuru-primary: #6fff54;
+  --kuru-primary: #05c4f5;
   /* Text and icons placed on the primary. */
-  --kuru-on-primary: #0a0b0a;
+  --kuru-on-primary: #000814;
   /* Derived from the primary; never hard-code these. */
   --kuru-primary-soft: color-mix(in srgb, var(--kuru-primary) 55%, #fff);
-  --kuru-primary-deep: color-mix(in srgb, var(--kuru-primary) 48%, #000);
+  --kuru-primary-deep: #022997;
   /* The primary as text or lines: the primary on dark, its deep mix on light. */
   --kuru-primary-ink: var(--kuru-primary);
   --color-blue-300: var(--kuru-primary-soft);
-  --color-blue-500: var(--kuru-primary);
+  --color-blue-500: #0264f5;
   --color-blue-700: var(--kuru-primary-deep);
 }
 html[data-theme="light"] {
-  --kuru-primary-ink: var(--kuru-primary-deep);
+  --kuru-primary: #025ded;
+  --kuru-primary-ink: #025ded;
+  --kuru-on-primary: #ffffff;
 }
 /* The approach cards' art, recoloured to the primary by generate:brand. */
 :root,
@@ -49,7 +51,7 @@ html[data-theme="light"] {
   > a:not(:is([href="/"], [href="/works"], [href="/services"], [href="/about-us"])) {
   display: none !important;
 }
-header a[aria-label="Kuru Labs — home"] {
+header a[aria-label="YoYa Tech — Home"] {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -58,26 +60,23 @@ header a[aria-label="Kuru Labs — home"] {
   letter-spacing: -1.1px;
   white-space: nowrap;
 }
-header a[aria-label="Kuru Labs — home"] > svg {
-  display: none;
-}
-header a[aria-label="Kuru Labs — home"]:before {
+header a[aria-label="YoYa Tech — Home"]:before {
   content: "";
   display: block;
   width: 28px;
   height: 26px;
-  background: url(/kuru/images/mark.svg?v=57d7b931e97a) center/contain no-repeat;
+  background: url(/yoya_tech_logos/SVG/onlylogo.svg) center/contain no-repeat;
 }
-header a[aria-label="Kuru Labs — home"]:after {
-  content: "Kuru Labs";
+header a[aria-label="YoYa Tech — Home"]:after {
+  content: "YoYa Tech";
 }
-html[data-theme="light"] header a[aria-label="Kuru Labs — home"]:before {
-  filter: invert(1);
+html[data-theme="light"] header a[aria-label="YoYa Tech — Home"]:before {
+  filter: none;
 }
-svg[aria-label="Kuru Labs"] {
+svg[aria-label="YoYa Tech"] {
   color: var(--kuru-primary);
 }
-html[data-theme="light"] svg[aria-label="Kuru Labs"] {
+html[data-theme="light"] svg[aria-label="YoYa Tech"] {
   color: var(--kuru-primary-ink);
 }
 .vv-footer-mark {
@@ -149,14 +148,14 @@ button[role="switch"][aria-label^="Switch to"]:focus-visible {
   background: linear-gradient(180deg, #0002 0%, #0003 40%, #0008 75%, var(--vv-bg, #000) 100%);
 }
 .hh-stage .hh-sub {
-  color: #e0ebdd;
+  color: #cbd5e1;
 }
 html[data-theme="light"] .hh-stage h1,
 html[data-theme="light"] .hh-stage .hh-badge {
   color: #fff;
 }
 html[data-theme="light"] .hh-stage .hh-sub {
-  color: #e0ebdd;
+  color: #cbd5e1;
 }
 .kuru-intro {
   --box: clamp(96px, 16.8vw, 168px);
@@ -456,7 +455,7 @@ html[data-theme="light"] .kuru-build {
   }
 }
 @media (max-width: 480px) {
-  header a[aria-label="Kuru Labs — home"] {
+  header a[aria-label="YoYa Tech — Home"] {
     font-size: 20px;
     gap: 8px;
   }

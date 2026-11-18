@@ -85,7 +85,7 @@ export function OurApproach() {
     };
   }, []);
 
-  // Parallax calculations matching Kuru's GSAP values
+  // Parallax calculations matching smooth GSAP values
   // Card 1: x from 210px to -210px
   const discoveryX = 210 - scrollProgress * 420;
   // Card 3: laptop tilt from -19deg to 0deg as it scrolls in
@@ -395,7 +395,7 @@ export function OurApproach() {
                       <svg width="20" height="22" viewBox="0 0 249 273" fill="none">
                         <path
                           d="m1.81 20.046 39.667 238.391c2.237 13.443 19.18 18.114 27.99 7.717l57.9-68.335a30 30 0 0 1 14.345-9.364l94.457-28.064c13.362-3.97 15.611-21.939 3.639-29.079L25.788 3.678C14.086-3.3-.427 6.607 1.81 20.046Z"
-                          fill="#6fff54"
+                          fill="#05c4f5"
                           stroke="#ffffff"
                           strokeWidth="2"
                         />
@@ -416,7 +416,7 @@ export function OurApproach() {
                         <svg width="18" height="20" viewBox="0 0 249 273" fill="none">
                           <path
                             d="m1.81 20.046 39.667 238.391c2.237 13.443 19.18 18.114 27.99 7.717l57.9-68.335a30 30 0 0 1 14.345-9.364l94.457-28.064c13.362-3.97 15.611-21.939 3.639-29.079L25.788 3.678C14.086-3.3-.427 6.607 1.81 20.046Z"
-                            fill="#6fff54"
+                            fill="#05c4f5"
                             stroke="#ffffff"
                             strokeWidth="2"
                           />

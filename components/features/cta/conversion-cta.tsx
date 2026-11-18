@@ -29,7 +29,7 @@ export function ConversionCTA() {
 
         {/* Dual Primary Call-to-Actions */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="lg" className="rounded-full px-7 sm:px-8 py-3 text-sm sm:text-base font-medium min-w-[160px]">
+          <Button asChild size="lg" className="rounded-full px-7 sm:px-8 min-w-[160px]">
             <Link href="#pricing">
               <RollingText text="Start a project" />
             </Link>
@@ -39,11 +39,11 @@ export function ConversionCTA() {
             asChild
             variant="outline"
             size="lg"
-            className="rounded-full px-7 sm:px-8 py-3 text-sm sm:text-base font-medium group min-w-[160px]"
+            className="rounded-full px-7 sm:px-8 min-w-[160px] group"
           >
-            <Link href="#works" className="inline-flex items-center justify-center">
+            <Link href="#works">
               <RollingText text="See our work" />
-              <ArrowRight className="ml-2 h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+              <ArrowRight className="ml-2 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
             </Link>
           </Button>
         </div>
@@ -61,11 +61,11 @@ export function ConversionCTA() {
           </a>
 
           <a
-            href="mailto:contact@kurulabs.com"
+            href="mailto:info@yoyatech.com"
             className="flex items-center gap-2 rounded-full border border-border bg-bg-surface px-4 py-2 text-text-muted transition-colors hover:border-accent hover:text-text-secondary"
           >
             <Mail className="h-3.5 w-3.5 text-accent" strokeWidth={1.5} />
-            <span>contact@kurulabs.com</span>
+            <span>info@yoyatech.com</span>
           </a>
         </div>
       </div>

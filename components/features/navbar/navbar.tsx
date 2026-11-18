@@ -132,7 +132,7 @@ function ThemeSwitch({
       suppressHydrationWarning
       aria-checked={effectiveTheme === "light"}
       aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"} mode`}
-      className={`group relative inline-grid size-9 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-brand ${isOverHero
+      className={`group relative inline-grid size-8 sm:size-9 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-brand ${isOverHero
           ? "border-white/15 bg-white/5 text-white/80 hover:border-accent hover:text-accent hover:bg-white/10"
           : "border-line bg-surface/60 text-fg hover:border-accent hover:text-accent hover:bg-surface shadow-sm"
         } ${className}`}
@@ -153,10 +153,31 @@ function ThemeSwitch({
 }
 
 export function Navbar() {
+  const [theme, setTheme] = React.useState<"dark" | "light">("dark");
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isCompact, setIsCompact] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState("hero");
+
+  // Track active theme ("dark" or "light") to adapt logo & contrast
+  React.useEffect(() => {
+    const syncTheme = () => {
+      const current = document.documentElement.getAttribute("data-theme") as "dark" | "light" | null;
+      if (current === "dark" || current === "light") {
+        setTheme(current);
+      } else if (document.documentElement.classList.contains("dark")) {
+        setTheme("dark");
+      }
+    };
+    syncTheme();
+
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme", "class"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   // Scroll threshold check (> 24px)
   React.useEffect(() => {
@@ -228,46 +249,76 @@ export function Navbar() {
 
   const isOverHero = !isCompact && !isScrolled;
 
+  // The hero section is always dark (#020612), so while over the hero,
+  // the logo text MUST be white (darkmodelogo.svg) regardless of light/dark theme.
+  // The dark-text logo is only shown when scrolled past the hero in light mode (or when mobile menu drawer is open in light mode).
+  const showDarkLogo = theme === "light" && (!isOverHero || mobileMenuOpen);
+
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-[200] border-b transition-[padding,background-color,border-color,backdrop-filter] duration-500 ease-brand motion-reduce:transition-none ${isScrolled && !isCompact
-            ? "border-line bg-[var(--vv-nav-bg)] backdrop-blur-xl backdrop-saturate-150 shadow-sm"
-            : "border-transparent shadow-none"
-          } ${isCompact
+        className={`fixed inset-x-0 top-0 z-[200] border-b transition-[padding,background-color,border-color,backdrop-filter] duration-500 ease-brand motion-reduce:transition-none ${
+          mobileMenuOpen
+            ? "border-line bg-bg shadow-lg"
+            : isScrolled && !isCompact
+              ? "border-line bg-[var(--vv-nav-bg)] backdrop-blur-xl backdrop-saturate-150 shadow-sm"
+              : isOverHero
+                ? "border-white/10 bg-black/40 backdrop-blur-xl backdrop-saturate-150 shadow-sm min-[981px]:border-transparent min-[981px]:bg-transparent min-[981px]:backdrop-filter-none min-[981px]:shadow-none"
+                : "border-line/40 bg-bg/85 backdrop-blur-xl backdrop-saturate-150 shadow-sm min-[981px]:border-transparent min-[981px]:bg-transparent min-[981px]:backdrop-filter-none min-[981px]:shadow-none"
+        } ${
+          isCompact
             ? "min-[981px]:border-transparent min-[981px]:bg-transparent min-[981px]:pt-5 min-[981px]:backdrop-filter-none min-[981px]:shadow-none"
             : ""
-          }`}
+        }`}
       >
         <div
-          className={`mx-auto grid max-w-[1380px] grid-cols-[auto_1fr] items-center gap-5 px-6 py-4 transition-[max-width,padding,background-color,border-radius,box-shadow,backdrop-filter] duration-500 ease-brand motion-reduce:transition-none min-[981px]:grid-cols-[1fr_auto_1fr] ${isCompact
+          className={`mx-auto flex items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-3.5 transition-[max-width,padding,background-color,border-radius,box-shadow,backdrop-filter] duration-500 ease-brand motion-reduce:transition-none min-[981px]:grid min-[981px]:max-w-[1380px] min-[981px]:grid-cols-[1fr_auto_1fr] min-[981px]:gap-5 min-[981px]:px-8 min-[981px]:py-4 ${
+            isCompact
               ? "min-[981px]:max-w-[920px] min-[981px]:rounded-[8px] min-[981px]:bg-[var(--vv-nav-bg)] min-[981px]:px-3 min-[981px]:py-3 min-[981px]:ring-1 min-[981px]:ring-line min-[981px]:backdrop-blur-xl min-[981px]:backdrop-saturate-150 min-[981px]:shadow-2xl"
-              : "md:px-8"
-            }`}
+              : ""
+          }`}
         >
-          {/* Logo Column */}
+          {/* Logo Column: Smooth Theme & Hero-Aware Transition */}
           <Link
             href="/"
-            aria-label="Kuru Labs — Home"
-            className={`flex items-center gap-2.5 justify-self-start group transition-[padding] duration-500 ease-brand ${isCompact ? "min-[981px]:pl-3" : ""
-              }`}
+            aria-label="YoYa Tech — Home"
+            className={`flex items-center justify-self-start group shrink-0 transition-[padding] duration-500 ease-brand ${
+              isCompact ? "min-[981px]:pl-2" : ""
+            }`}
           >
-            <div className="relative h-6 w-6 shrink-0 transition-transform duration-300 group-hover:scale-110">
-              <Image
-                src="/kuru/images/mark-green.svg"
-                alt="Kuru Labs"
-                fill
-                sizes="24px"
-                className="object-contain"
-                priority
-              />
-            </div>
-            <span
-              className={`font-display text-lg font-medium tracking-tight transition-colors group-hover:text-accent ${isOverHero ? "text-white" : "text-fg"
+            <div className="relative h-8 w-[102px] sm:h-9 sm:w-[118px] md:h-10 md:w-[132px] shrink-0 transition-transform duration-300 group-hover:scale-[1.03]">
+              {/* White Text Logo (for dark backgrounds: hero section in any mode, or anywhere in dark mode) */}
+              <div
+                className={`absolute inset-0 transition-opacity duration-300 ${
+                  showDarkLogo ? "opacity-0 pointer-events-none" : "opacity-100"
                 }`}
-            >
-              Kuru Labs
-            </span>
+              >
+                <Image
+                  src="/yoya_tech_logos/SVG/darkmodelogo.svg"
+                  alt="YoYa Tech"
+                  fill
+                  sizes="(max-width: 640px) 102px, (max-width: 768px) 118px, 132px"
+                  className="object-contain object-left"
+                  priority
+                />
+              </div>
+
+              {/* Black Text Logo (only for light background: scrolled past hero in light mode) */}
+              <div
+                className={`absolute inset-0 transition-opacity duration-300 ${
+                  showDarkLogo ? "opacity-100" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                <Image
+                  src="/yoya_tech_logos/SVG/lightmodelogo.svg"
+                  alt="YoYa Tech"
+                  fill
+                  sizes="(max-width: 640px) 102px, (max-width: 768px) 118px, 132px"
+                  className="object-contain object-left"
+                  priority
+                />
+              </div>
+            </div>
           </Link>
 
           {/* Desktop Primary Navigation */}
@@ -279,14 +330,15 @@ export function Navbar() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-[15px] tracking-[-0.01em] transition-colors ${isOverHero
+                  className={`text-[15px] tracking-[-0.01em] transition-colors ${
+                    isOverHero
                       ? isActive
                         ? "font-medium text-white"
                         : "text-white/70 hover:text-white"
                       : isActive
                         ? "font-medium text-fg"
                         : "text-fg-muted hover:text-fg"
-                    }`}
+                  }`}
                 >
                   {item.label}
                 </Link>
@@ -295,17 +347,18 @@ export function Navbar() {
           </nav>
 
           {/* Right Action Column */}
-          <div className="flex items-center gap-2 justify-self-end min-[981px]:gap-3.5">
-            {/* Kuru Sun/Moon Theme Switch */}
+          <div className="flex items-center gap-2 sm:gap-2.5 justify-self-end min-[981px]:gap-3.5">
+            {/* Sun/Moon Theme Switch */}
             <ThemeSwitch isOverHero={isOverHero} />
 
             {/* Let's Connect CTA Pill */}
             <Link
               href="#pricing"
-              className={`inline-flex h-[38px] shrink-0 items-center rounded-full border border-transparent px-4 text-[13px] font-medium tracking-[-0.01em] whitespace-nowrap transition-all duration-300 min-[981px]:h-[36px] min-[981px]:px-[18px] ${isOverHero
+              className={`hidden xs:inline-flex h-8 sm:h-[36px] shrink-0 items-center rounded-full border border-transparent px-3 sm:px-4 text-xs sm:text-[13px] font-medium tracking-[-0.01em] whitespace-nowrap transition-all duration-300 min-[981px]:h-[36px] min-[981px]:px-[18px] ${
+                isOverHero
                   ? "bg-white text-black hover:bg-white/90 shadow-sm"
                   : "bg-fg text-bg hover:bg-fg-strong shadow-sm"
-                }`}
+              }`}
             >
               <RollingText text="Connect" className="min-[981px]:hidden" />
               <RollingText text="Let’s Connect" className="hidden min-[981px]:inline" />
@@ -317,29 +370,32 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              className={`grid size-[42px] shrink-0 place-items-center rounded-full border transition-colors duration-300 ease-brand min-[981px]:hidden ${mobileMenuOpen
+              className={`grid size-9 sm:size-[40px] shrink-0 place-items-center rounded-full border transition-colors duration-300 ease-brand min-[981px]:hidden ${
+                mobileMenuOpen
                   ? "border-fg bg-fg"
                   : isOverHero
-                    ? "border-white/20 bg-white/5 text-white"
+                    ? "border-white/20 bg-white/10 text-white"
                     : "border-line-strong bg-surface text-fg"
-                }`}
+              }`}
             >
               <span className="relative block h-[10px] w-4">
                 <span
-                  className={`absolute left-0 block h-[1.5px] w-full transition-[rotate,top,background-color] duration-[380ms] ease-brand motion-reduce:transition-none ${mobileMenuOpen
+                  className={`absolute left-0 block h-[1.5px] w-full transition-[rotate,top,background-color] duration-[380ms] ease-brand motion-reduce:transition-none ${
+                    mobileMenuOpen
                       ? "top-[4.25px] rotate-45 bg-bg"
                       : isOverHero
                         ? "top-0 bg-white"
                         : "top-0 bg-fg"
-                    }`}
+                  }`}
                 />
                 <span
-                  className={`absolute left-0 block h-[1.5px] w-full transition-[rotate,top,background-color] duration-[380ms] ease-brand motion-reduce:transition-none ${mobileMenuOpen
+                  className={`absolute left-0 block h-[1.5px] w-full transition-[rotate,top,background-color] duration-[380ms] ease-brand motion-reduce:transition-none ${
+                    mobileMenuOpen
                       ? "top-[4.25px] -rotate-45 bg-bg"
                       : isOverHero
                         ? "top-[8.5px] bg-white"
                         : "top-[8.5px] bg-fg"
-                    }`}
+                  }`}
                 />
               </span>
             </button>
@@ -350,8 +406,9 @@ export function Navbar() {
       {/* Mobile Sliding Drawer Menu */}
       <div
         inert={!mobileMenuOpen}
-        className={`fixed inset-0 z-[190] flex flex-col justify-between bg-bg px-6 pt-[104px] pb-10 transition-[clip-path] duration-[600ms] ease-brand min-[981px]:hidden ${mobileMenuOpen ? "[clip-path:inset(0)]" : "pointer-events-none [clip-path:inset(0_0_100%_0)]"
-          }`}
+        className={`fixed inset-0 z-[190] flex flex-col justify-between bg-bg/98 backdrop-blur-2xl px-6 pt-[78px] sm:pt-[90px] pb-8 transition-[clip-path] duration-[600ms] ease-brand min-[981px]:hidden ${
+          mobileMenuOpen ? "[clip-path:inset(0)]" : "pointer-events-none [clip-path:inset(0_0_100%_0)]"
+        }`}
       >
         <nav aria-label="Mobile" className="flex flex-col">
           {NAV_LINKS.map((item, idx) => {

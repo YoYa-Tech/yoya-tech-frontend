@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1080">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="165 388 750 304">
   <defs>
     <style>
       .cls-1 {
@@ -39,7 +39,6 @@
       <stop offset="1" stop-color="#0ac5fb"/>
     </linearGradient>
   </defs>
-  <rect class="cls-2" width="1080" height="1080"/>
   <g id="Layer_1" data-name="Layer 1">
     <g>
       <g>

@@ -15,7 +15,7 @@ export function RollingText({ text, className = "" }: RollingTextProps) {
       {/* Screen reader only accessibility */}
       <span className="sr-only">{clean}</span>
 
-      {/* Signature Kuru desktop hover character roll */}
+      {/* Smooth desktop hover character roll */}
       <span aria-hidden="true" className="vv-roll">
         {[...clean].map((char, idx) => (
           <span

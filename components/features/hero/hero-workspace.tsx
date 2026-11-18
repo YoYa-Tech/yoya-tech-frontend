@@ -168,7 +168,15 @@ export function HeroWorkspace() {
       <div className="kuru-ws-top">
         {/* Left Column: Crumb */}
         <p className="kuru-ws-crumb">
-          <span className="kuru-ws-mark" aria-hidden="true" />
+          <span className="relative inline-block h-[18px] w-[18px] shrink-0" aria-hidden="true">
+            <Image
+              src="/yoya_tech_logos/SVG/onlylogo.svg"
+              alt="YoYa Tech"
+              fill
+              sizes="18px"
+              className="object-contain"
+            />
+          </span>
           <span>YoYa Tech</span>
           <i>/</i>
           <span>Client workspace</span>

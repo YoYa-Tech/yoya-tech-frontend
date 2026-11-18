@@ -25,8 +25,8 @@ export function HeroCanvas() {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Fetch and compile shader
-    fetch("/kuru/shaders/hero.frag")
+    // Fetch and compile shader with cache-busting version parameter
+    fetch("/kuru/shaders/hero.frag?v=yoya-v3")
       .then((res) => {
         if (!res.ok) throw new Error("Shader unavailable");
         return res.text();
@@ -84,8 +84,8 @@ export function HeroCanvas() {
         const uMouseLocation = gl.getUniformLocation(program, "uMouse");
         const uPrimaryLocation = gl.getUniformLocation(program, "uPrimary");
 
-        // Primary brand green #6fff54 -> [0.435, 1.0, 0.329]
-        gl.uniform3fv(uPrimaryLocation, new Float32Array([0.43529, 1.0, 0.32941]));
+        // YoYa Tech primary cobalt royal blue #025ded -> [0.00784, 0.3647, 0.9294]
+        gl.uniform3fv(uPrimaryLocation, new Float32Array([0.00784, 0.36471, 0.92941]));
 
         function draw(seconds: number) {
           if (!gl || !program) return;

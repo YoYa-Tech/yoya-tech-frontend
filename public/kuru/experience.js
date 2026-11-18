@@ -84,7 +84,7 @@ function startExperience() {
     if (sections.place(ready)) refreshScroll();
     sections.mount();
   }
-  // The hero's product view: a Kuru Labs workspace inside the retained editor frame.
+  // The hero's product view: a YoYa Tech workspace inside the retained editor frame.
   function syncWorkspace() {
     const frame = document.querySelector('#hero .hh-editor[class*="h-[490px]"]');
     if (!frame) {

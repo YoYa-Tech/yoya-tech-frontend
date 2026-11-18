@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 const FAQS = [
   {
     num: "1",
-    question: "How do I get started with Kuru Labs?",
+    question: "How do I get started with YoYa Tech?",
     answer:
       "Simply fill out the contact form, and we’ll reach out through email or WhatsApp based on your preferred method of communication.",
   },
@@ -38,7 +38,7 @@ const FAQS = [
     num: "6",
     question: "Do you work with international clients?",
     answer:
-      "Yes — most of our work is international. Kuru Labs serves clients across the United States, United Kingdom, Europe, the Middle East and worldwide, working across time zones with updates over email or WhatsApp.",
+      "Yes — most of our work is international. YoYa Tech serves clients across the United States, United Kingdom, Europe, the Middle East and worldwide, working across time zones with updates over email or WhatsApp.",
   },
 ];
 

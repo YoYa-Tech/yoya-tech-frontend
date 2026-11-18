@@ -9,7 +9,7 @@ export interface ToolIconProps extends React.SVGProps<SVGSVGElement> {
 
 /**
  * Renders an official tech mark from /kuru/images/tools.svg sprite.
- * Supports all 51 tools extracted from Kuru Labs:
+ * Supports all 51 modern engineering tools:
  * nextdotjs, react, typescript, nodedotjs, tailwindcss, flutter, laravel, django,
  * fastapi, supabase, postgresql, mongodb, figma, claude, n8n, make, python, etc.
  */

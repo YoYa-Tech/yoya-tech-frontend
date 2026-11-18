@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { RollingText } from "@/components/ui/rolling-text";
 import { ToolIcon } from "@/components/ui/tool-icon";
 
@@ -149,18 +150,21 @@ export function ProcessPipeline() {
           </h2>
 
           <div className="flex shrink-0 flex-wrap items-center gap-3">
-            <Link
-              className="inline-flex items-center justify-center rounded-full bg-text-secondary text-bg-canvas px-5 sm:px-6 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-medium transition-all hover:opacity-90 active:scale-[0.98]"
-              href="#pricing"
+            <Button asChild size="lg" className="rounded-full px-6 sm:px-7">
+              <Link href="#pricing">
+                <RollingText text="View all services" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full px-6 sm:px-7"
             >
-              <RollingText text="View all services" />
-            </Link>
-            <Link
-              className="inline-flex items-center justify-center rounded-full border border-border bg-bg-surface px-5 sm:px-6 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-medium text-text-secondary transition-all hover:border-text-secondary/40 hover:bg-bg-surface/80 active:scale-[0.98]"
-              href="#pricing"
-            >
-              <RollingText text="Start a project" />
-            </Link>
+              <Link href="#pricing">
+                <RollingText text="Start a project" />
+              </Link>
+            </Button>
           </div>
         </div>
 
@@ -234,13 +238,16 @@ export function ProcessPipeline() {
             </div>
 
             <div className="pt-5">
-              <Link
-                href="#works"
-                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-5 sm:px-6 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-medium text-white !text-white transition-all hover:border-white/40 hover:bg-white/20 active:scale-[0.98]"
-                style={{ color: "#ffffff" }}
+              <Button
+                asChild
+                variant="glass"
+                size="lg"
+                className="rounded-full px-6 sm:px-7 border-white/20 bg-white/10 text-white hover:bg-white/20 hover:border-white/40"
               >
-                <RollingText text="See our work" />
-              </Link>
+                <Link href="#works" style={{ color: "#ffffff" }}>
+                  <RollingText text="See our work" />
+                </Link>
+              </Button>
             </div>
           </div>
 

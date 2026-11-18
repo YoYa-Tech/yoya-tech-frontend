@@ -103,7 +103,7 @@ function capabilitiesBand() {
   const items = CAPABILITIES.map((item) => `<li>${item}</li>`).join("");
   return owned(
     "section",
-    'class="kuru-band" aria-label="What Kuru Labs does"',
+    'class="kuru-band" aria-label="What YoYa Tech does"',
     `<div class="kuru-band-track"><ul>${items}</ul><ul aria-hidden="true">${items}</ul></div>`,
   );
 }
@@ -120,7 +120,7 @@ function outcomesSection() {
       <div class="kuru-outcomes-intro">
         <h2 id="kuru-outcomes-heading" class="kuru-h2">What we help businesses <span class="kuru-accent kuru-ink">achieve</span></h2>
         <p class="kuru-lead">From customer-facing platforms to internal workflows, we design and build solutions that remove friction and unlock opportunities.</p>
-        <a class="kuru-text-link" href="/about-us">More about Kuru Labs ${icon("arrow")}</a>
+        <a class="kuru-text-link" href="/about-us">More about YoYa Tech ${icon("arrow")}</a>
       </div>
       <ol class="kuru-outcomes-list">${rows}</ol>
     </div>`,
@@ -181,7 +181,7 @@ function closingSection() {
         <a class="kuru-button kuru-button-quiet" href="/works">See our work</a>
       </div>
       <div class="kuru-reasons">
-        <p class="kuru-reasons-title">Why clients work with Kuru Labs</p>
+        <p class="kuru-reasons-title">Why clients work with YoYa Tech</p>
         <ul>${reasons}</ul>
       </div>
     </div>`,

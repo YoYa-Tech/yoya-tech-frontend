@@ -7,29 +7,34 @@
   --font-walsheim: "GT Walsheim", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-fraunces: "Fraunces", Georgia, Cambria, "Times New Roman", serif;
 
-  /* Core brand tokens */
+  /* Core brand tokens — YoYa Tech */
   --color-bg-canvas: #000000;
   --color-text-primary: #9a9a9a;
   --color-text-secondary: #ffffff;
   --color-text-muted: #7d7d7d;
-  --color-accent: #6fff54;
+  --color-accent: #05c4f5;
   --color-bg-surface: #1f1f1f;
   --color-border: #ffffff1c;
-  --color-gray-deep: #0a0b0a;
+  --color-gray-deep: #020712;
   --color-gray-light: #d8d8d8;
   --color-gray-dark: #757575;
   --color-gray-light-2: #f3f4ec;
   --color-gray-deep-2: #0f0f0f;
+  --color-green-dark: #022997;
+  --color-brand-blue: #025ded;
+  --color-brand-cyan: #05c4f5;
+  --color-brand-indigo: #3129ec;
+  --color-brand-purple: #cb51f6;
 
-  /* Live site tokens from Kuru Labs extraction */
+  /* Theme tokens */
   --vv-text-primary: #ffffff;
   --vv-text-muted: #9a9a9a;
-  --kuru-primary-ink: #6fff54;
+  --kuru-primary-ink: #05c4f5;
   --vv-text-subtle: #7d7d7d;
   --vv-bg: #000000;
-  --kuru-primary: #6fff54;
-  --kuru-on-primary: #0a0b0a;
-  --color-blue-500: var(--kuru-primary);
+  --kuru-primary: #05c4f5;
+  --kuru-on-primary: #000814;
+  --color-blue-500: #0264f5;
   --vv-text-strong: #d8d8d8;
   --vv-nav-bg: rgba(0, 0, 0, 0.72);
   --vv-surface: #141414;
@@ -39,8 +44,8 @@
   --vv-tint: rgba(255, 255, 255, 0.13);
   --vv-tint-strong: rgba(255, 255, 255, 0.19);
   --vv-tint-weak: rgba(255, 255, 255, 0.08);
-  --kuru-primary-deep: color-mix(in srgb, var(--kuru-primary) 48%, #000);
-  --kuru-primary-soft: color-mix(in srgb, var(--kuru-primary) 55%, #fff);
+  --kuru-primary-deep: #022997;
+  --kuru-primary-soft: #7fe6fd;
   --kuru-line: color-mix(in srgb, var(--vv-text-primary) 11%, transparent);
   --kuru-surface: color-mix(in srgb, var(--vv-text-primary) 4%, var(--vv-bg));
   --vv-border: #ffffff17;
@@ -80,13 +85,13 @@ html.light {
   --color-text-primary: #5a5a5a;
   --color-text-secondary: #000000;
   --color-text-muted: #767676;
-  --color-accent: #6fff54;
+  --color-accent: #025ded;
   --color-bg-surface: #f0f0f0;
   --color-border: #0000001c;
   --color-border-strong: #0000002e;
   --color-gray-deep: #0a0b0a;
   --color-gray-dark: #363636;
-  --color-green-dark: #357a28;
+  --color-green-dark: #022997;
   --color-gray-mid: #898989;
   --color-gray-mid-2: #9b9b9b;
   --color-gray-light: #1f1f1f;
@@ -95,12 +100,12 @@ html.light {
 
   --vv-text-primary: #000000;
   --vv-text-muted: #5a5a5a;
-  --kuru-primary-ink: #357a28;
+  --kuru-primary-ink: #025ded;
   --vv-text-subtle: #767676;
   --vv-bg: #ffffff;
-  --kuru-primary: #6fff54;
-  --kuru-on-primary: #000000;
-  --color-blue-500: var(--kuru-primary);
+  --kuru-primary: #025ded;
+  --kuru-on-primary: #ffffff;
+  --color-blue-500: #025ded;
   --vv-text-strong: #000000;
   --vv-nav-bg: rgba(255, 255, 255, 0.85);
   --vv-surface: #f0f0f0;
@@ -335,7 +340,7 @@ html[data-theme="light"] .kuru-outcome[data-active] h3 {
   color: #000000 !important;
 }
 
-/* Circular ripple view transitions matching Kuru Labs */
+/* Circular ripple view transitions */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -376,7 +381,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 html, body {
-  cursor: url("/cursor/arrow.svg") 3 3, auto;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 52 52' fill='none'%3E%3Cg transform='translate(-19.4 1.5) rotate(-45 25.4 4.5)'%3E%3Cpath d='M42.6817 41.1495L27.5103 6.79925C26.7269 5.02557 24.2082 5.02558 23.3927 6.79925L7.59814 41.1495C6.75833 42.9759 8.52712 44.8902 10.4125 44.1954L24.3757 39.0496C24.8829 38.8627 25.4385 38.8627 25.9422 39.0496L39.8121 44.1954C41.6849 44.8902 43.4884 42.9759 42.6817 41.1495Z' fill='%2305c4f5'/%3E%3Cpath d='M43.7146 40.6933L28.5431 6.34306C27.3556 3.65428 23.5772 3.69516 22.3668 6.32755L6.57226 40.6778C5.3134 43.4156 7.97238 46.298 10.803 45.2549L24.7662 40.109C25.0221 40.0147 25.2999 40.0156 25.5494 40.1082L39.4193 45.254C42.2261 46.2953 44.9254 43.4347 43.7146 40.6933Z' stroke='white' stroke-width='2.25825'/%3E%3C/g%3E%3C/svg%3E") 3 3, url("/cursor/arrow-yoya.svg?v=2026") 3 3, url("/cursor/arrow.svg?v=2026") 3 3, auto;
 }
 
 button, a, [role="button"], select, input, textarea {
@@ -394,7 +399,7 @@ button, a, [role="button"], select, input, textarea {
   animation: vv-breathe-cycle 6s ease-in-out infinite;
 }
 
-/* Scroll Reveal animations measured on Kuru Labs */
+/* Scroll Reveal animations */
 [data-reveal="true"] {
   opacity: 0;
   transform: translateY(24px);

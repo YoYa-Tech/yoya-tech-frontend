@@ -39,20 +39,22 @@
 :root {
   --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
   --font-walsheim: "GT Walsheim", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --kuru-primary: #6fff54;
+  --kuru-primary: #05c4f5;
   /* Text and icons placed on the primary. */
-  --kuru-on-primary: #0a0b0a;
+  --kuru-on-primary: #000814;
   /* Derived from the primary; never hard-code these. */
   --kuru-primary-soft: color-mix(in srgb, var(--kuru-primary) 55%, #fff);
-  --kuru-primary-deep: color-mix(in srgb, var(--kuru-primary) 48%, #000);
+  --kuru-primary-deep: #022997;
   /* The primary as text or lines: the primary on dark, its deep mix on light. */
   --kuru-primary-ink: var(--kuru-primary);
   --color-blue-300: var(--kuru-primary-soft);
-  --color-blue-500: var(--kuru-primary);
+  --color-blue-500: #0264f5;
   --color-blue-700: var(--kuru-primary-deep);
 }
 html[data-theme="light"] {
-  --kuru-primary-ink: var(--kuru-primary-deep);
+  --kuru-primary: #025ded;
+  --kuru-primary-ink: #025ded;
+  --kuru-on-primary: #ffffff;
 }
 /* The approach cards' art, recoloured to the primary by generate:brand. */
 :root,
@@ -82,10 +84,10 @@ html.light {
   > a:not(:is([href="/"], [href="#hero"], [href="/works"], [href="#works"], [href="/services"], [href="#services"], [href="#approach"], [href="#pricing"], [href="/about-us"], [href="#faqs"])) {
   display: none !important;
 }
-svg[aria-label="Kuru Labs"] {
+svg[aria-label="YoYa Tech"] {
   color: var(--kuru-primary);
 }
-html[data-theme="light"] svg[aria-label="Kuru Labs"] {
+html[data-theme="light"] svg[aria-label="YoYa Tech"] {
   color: var(--kuru-primary-ink);
 }
 .vv-footer-mark {
@@ -117,14 +119,14 @@ html[data-theme="light"] svg[aria-label="Kuru Labs"] {
   display: none;
 }
 .hh-stage .hh-sub {
-  color: #e0ebdd;
+  color: #cbd5e1;
 }
 html[data-theme="light"] .hh-stage h1,
 html[data-theme="light"] .hh-stage .hh-badge {
   color: #fff;
 }
 html[data-theme="light"] .hh-stage .hh-sub {
-  color: #e0ebdd;
+  color: #cbd5e1;
 }
 .kuru-intro {
   --box: clamp(96px, 16.8vw, 168px);
@@ -425,7 +427,7 @@ html.light .kuru-build {
   }
 }
 @media (max-width: 480px) {
-  header a[aria-label="Kuru Labs — home"] {
+  header a[aria-label="YoYa Tech — Home"] {
     font-size: 20px;
     gap: 8px;
   }
@@ -742,7 +744,7 @@ a:hover .vv-roll-char,
   right: 0;
   bottom: 0;
   height: 2px;
-  background: var(--kuru-primary-ink, #6fff54);
+  background: var(--kuru-primary-ink, #05c4f5);
   transform: scaleX(0);
   transform-origin: right center;
   transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -807,7 +809,7 @@ a:hover .vv-roll-char,
 .kuru-outcome[data-active="true"] .kuru-outcome-index,
 .kuru-outcome[data-active] .kuru-outcome-index,
 .kuru-outcome.data-active .kuru-outcome-index {
-  color: var(--kuru-primary-ink, #6fff54);
+  color: var(--kuru-primary-ink, #05c4f5);
 }
 
 /* Pricing by division: stacked cards */
@@ -1507,9 +1509,7 @@ main form button[type="submit"] {
 .kuru-ws-mark {
   width: 18px;
   height: 18px;
-  background: var(--kuru-primary);
-  -webkit-mask: url(/kuru/images/mark.svg?v=57d7b931e97a) center / contain no-repeat;
-  mask: url(/kuru/images/mark.svg?v=57d7b931e97a) center / contain no-repeat;
+  background: url(/yoya_tech_logos/SVG/onlylogo.svg) center / contain no-repeat;
 }
 .kuru-ws-dot {
   flex: none;

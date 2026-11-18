@@ -1,4 +1,4 @@
-// Kuru Labs content shared by the owned sections: what the agency does, how it is
+// YoYa Tech content shared by the owned sections: what the agency does, how it is
 // priced and what it builds with. Edit here and every section that lists it follows.
 
 /** Line icons (Lucide paths, 24×24, stroke 1.5). */

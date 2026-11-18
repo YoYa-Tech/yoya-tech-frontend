@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "YoYa Tech" }],
   icons: {
-    icon: "/kuru/images/mark-green.svg",
-    shortcut: "/kuru/images/mark-green.svg",
-    apple: "/kuru/images/mark-green.svg",
+    icon: "/yoya_tech_logos/SVG/onlylogo.svg",
+    shortcut: "/yoya_tech_logos/SVG/onlylogo.svg",
+    apple: "/yoya_tech_logos/PNG/onlylogo.png",
   },
 };
 
@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth" data-theme="dark" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/kuru/images/mark-green.svg" type="image/svg+xml" />
+        <link rel="icon" href="/yoya_tech_logos/SVG/onlylogo.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet" />
