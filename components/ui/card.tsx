@@ -7,11 +7,11 @@ const cardVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-bg-surface text-text-secondary rounded-xs",
-        tier: "bg-gray-deep-2 border border-border rounded-2xl hover:border-white/20",
-        elevated: "bg-[#141414] border border-border/80 rounded-xl shadow-xl",
-        glass: "bg-white/[0.02] backdrop-blur-md border border-border rounded-xl",
-        flat: "bg-black border border-border/60 rounded-xl",
+        default: "bg-surface text-fg rounded-xs",
+        tier: "bg-surface border border-line rounded-2xl hover:border-line-strong",
+        elevated: "bg-surface-strong border border-line rounded-xl shadow-xl",
+        glass: "bg-surface/50 backdrop-blur-md border border-line rounded-xl",
+        flat: "bg-bg border border-line rounded-xl",
       },
       padding: {
         none: "p-0",

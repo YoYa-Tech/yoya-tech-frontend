@@ -225,12 +225,12 @@ export function OurWorks() {
     <section
       id="works"
       ref={sectionRef}
-      className="relative z-10 bg-black py-28 sm:py-36 border-b border-white/10"
+      className="relative z-10 bg-bg-canvas py-28 sm:py-36 border-b border-border"
       aria-labelledby="works-heading"
     >
       <div className="kuru-wrap">
         {/* Header with Title and Category Filters */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-white/10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-border">
           <div>
             <h2 id="works-heading" className="kuru-h2">
               Our <span className="kuru-accent kuru-ink">Works</span>
@@ -241,7 +241,7 @@ export function OurWorks() {
           </div>
 
           {/* Category Filter Pills */}
-          <div className="relative flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-white/[0.05] border border-white/10 backdrop-blur-md">
+          <div className="relative flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-bg-surface border border-border backdrop-blur-md">
             {[
               { id: "all", label: "All Projects" },
               { id: "web", label: "Web & Commerce" },
@@ -256,13 +256,13 @@ export function OurWorks() {
                   onClick={() => handleCategoryChange(tab.id as Category)}
                   className={`relative z-10 rounded-lg px-4 py-2 text-xs sm:text-sm font-medium transition-all duration-300 select-none ${
                     isActive
-                      ? "text-white font-semibold"
-                      : "text-text-muted hover:text-white hover:bg-white/[0.04]"
+                      ? "text-text-secondary font-semibold"
+                      : "text-text-muted hover:text-text-secondary hover:bg-bg-surface/60"
                   }`}
                 >
                   {isActive && (
                     <span
-                      className="absolute inset-0 rounded-lg bg-white/15 border border-white/12 shadow-[0_2px_10px_rgba(0,0,0,0.5)] -z-10 transition-all duration-300"
+                      className="absolute inset-0 rounded-lg bg-white text-black shadow-sm dark:bg-white/15 dark:text-white border border-border -z-10 transition-all duration-300"
                     />
                   )}
                   {tab.label}
@@ -304,13 +304,13 @@ export function OurWorks() {
                       <span className="font-mono text-xs font-semibold text-accent">
                         {pad(idx + 1)} / {pad(filteredProjects.length)}
                       </span>
-                      <span className="text-white/20">·</span>
+                      <span className="text-line-strong">·</span>
                       <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
                         {project.categoryLabel}
                       </span>
                     </div>
 
-                    <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-white group-hover:text-accent transition-colors leading-[1.12]">
+                    <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-text-secondary group-hover:text-accent transition-colors leading-[1.12]">
                       {project.title}
                     </h3>
 
@@ -329,7 +329,7 @@ export function OurWorks() {
                       {project.tools.map((tool) => (
                         <span
                           key={tool.name}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-white/80"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-bg-surface px-2.5 py-1 text-xs text-text-muted"
                         >
                           <ToolIcon slug={tool.slug} size={14} className="text-text-muted" />
                           <span>{tool.name}</span>
@@ -341,25 +341,25 @@ export function OurWorks() {
                     <div className="pt-2">
                       <Link
                         href="#pricing"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-accent transition-colors"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary group-hover:text-accent transition-colors"
                       >
                         <span>Explore Project Scope</span>
-                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        <ArrowUpRight strokeWidth={1.5} className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                       </Link>
                     </div>
                   </div>
 
                   {/* Right Column: High-Fidelity Browser & Mobile Mockup */}
                   <div className="lg:col-span-7 relative">
-                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-[#161618] shadow-2xl">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl sm:rounded-2xl border border-border bg-bg-surface shadow-2xl">
                       {/* Browser Bar */}
-                      <div className="flex items-center gap-2 border-b border-white/10 bg-[#1b1b1e] px-3 sm:px-4 py-2 sm:py-2.5">
+                      <div className="flex items-center gap-2 border-b border-border bg-bg-surface/80 px-3 sm:px-4 py-2 sm:py-2.5">
                         <div className="flex items-center gap-1.5">
                           <span className="h-2 sm:h-2.5 w-2 sm:w-2.5 rounded-full bg-[#ff5f57]" />
                           <span className="h-2 sm:h-2.5 w-2 sm:w-2.5 rounded-full bg-[#febc2e]" />
                           <span className="h-2 sm:h-2.5 w-2 sm:w-2.5 rounded-full bg-[#28c840]" />
                         </div>
-                        <span className="ml-2 rounded-md bg-black/40 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-mono text-white/60 truncate max-w-[200px]">
+                        <span className="ml-2 rounded-md bg-bg-canvas/50 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-mono text-text-muted truncate max-w-[200px]">
                           {project.url}
                         </span>
                       </div>
@@ -376,7 +376,7 @@ export function OurWorks() {
                       </div>
 
                       {/* Overlaid Floating Mobile Mockup Frame */}
-                      <div className="absolute right-3 sm:right-5 bottom-3 sm:bottom-4 w-[24%] sm:w-[26%] aspect-[9/19] rounded-xl sm:rounded-2xl border-2 border-white/20 bg-black shadow-2xl overflow-hidden hidden sm:block">
+                      <div className="absolute right-3 sm:right-5 bottom-3 sm:bottom-4 w-[24%] sm:w-[26%] aspect-[9/19] rounded-xl sm:rounded-2xl border-2 border-border bg-bg-canvas shadow-2xl overflow-hidden hidden sm:block">
                         {/* Dynamic Island */}
                         <div className="absolute top-1 left-1/2 -translate-x-1/2 h-1 w-6 rounded-full bg-white/40 z-10" />
                         <Image

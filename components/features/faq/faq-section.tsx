@@ -50,10 +50,10 @@ export function FAQSection() {
   };
 
   return (
-    <section id="faqs" className="bg-black py-28 sm:py-36 border-b border-white/5">
+    <section id="faqs" className="bg-bg-canvas py-28 sm:py-36 border-b border-border">
       <div className="mx-auto max-w-[1380px] px-6 md:px-8">
         <div className="text-center">
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-white">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-text-secondary">
             Frequently Asked <span className="text-accent italic font-serif">Questions</span>
           </h2>
           <p className="mt-4 text-base text-text-primary max-w-lg mx-auto">
@@ -69,8 +69,8 @@ export function FAQSection() {
                 key={faq.num}
                 className={`rounded-2xl border transition-all duration-300 ${
                   isOpen
-                    ? "border-accent/40 bg-[#161616]"
-                    : "border-white/10 bg-[#111111] hover:border-white/20"
+                    ? "border-accent/40 bg-bg-surface"
+                    : "border-border bg-bg-surface/50 hover:border-accent/30"
                 } px-6`}
               >
                 <h3>
@@ -82,14 +82,15 @@ export function FAQSection() {
                   >
                     <span
                       className={`flex-1 font-display text-base sm:text-lg font-medium transition-colors ${
-                        isOpen ? "text-accent" : "text-white group-hover:text-white"
+                        isOpen ? "text-accent" : "text-text-secondary group-hover:text-accent"
                       }`}
                     >
                       {faq.num}. {faq.question}
                     </span>
                     <ChevronDown
+                      strokeWidth={1.5}
                       className={`h-5 w-5 shrink-0 text-text-muted transition-transform duration-300 ${
-                        isOpen ? "rotate-180 text-accent" : "group-hover:text-white"
+                        isOpen ? "rotate-180 text-accent" : "group-hover:text-accent"
                       }`}
                     />
                   </button>

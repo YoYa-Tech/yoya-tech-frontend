@@ -212,7 +212,7 @@ export function PricingSection() {
     <section
       id="pricing"
       ref={sectionRef}
-      className="kuru-pricing bg-black text-white"
+      className="kuru-pricing bg-bg-canvas text-text-secondary"
       aria-labelledby="kuru-pricing-heading"
     >
       <div className="kuru-wrap">

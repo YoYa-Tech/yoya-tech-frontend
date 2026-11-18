@@ -9,8 +9,8 @@ const badgeVariants = cva(
       variant: {
         accent: "bg-accent/15 text-accent border border-accent/25",
         outline: "border border-border text-text-primary bg-transparent",
-        subtle: "bg-white/5 text-gray-light border border-white/10",
-        pill: "bg-[#141414] text-text-secondary border border-border",
+        subtle: "bg-surface text-fg-muted border border-line",
+        pill: "bg-surface-strong text-fg border border-line",
         greenDot: "bg-[#10240c] text-accent border border-accent/30",
       },
       size: {

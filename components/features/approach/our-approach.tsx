@@ -98,20 +98,20 @@ export function OurApproach() {
       id="approach"
       ref={sectionRef}
       aria-labelledby="approach-heading"
-      className="relative z-10 bg-black py-28 sm:py-36 border-b border-white/10"
+      className="relative z-10 bg-bg-canvas text-text-secondary py-28 sm:py-36 border-b border-border"
     >
       <div className="mx-auto max-w-[1380px] px-6 md:px-8">
         {/* Section Header */}
         <div>
           <h2
             id="approach-heading"
-            className="font-display text-[clamp(38px,4.6vw,64px)] leading-[1] font-medium tracking-tight text-white"
+            className="font-display text-[clamp(38px,4.6vw,64px)] leading-[1] font-medium tracking-tight text-text-secondary"
           >
             Our Approach
           </h2>
           <p className="mt-2 text-sm sm:text-base leading-[1.6] text-text-muted lg:mt-3 max-w-2xl">
             <span>We begin by </span>
-            <span className="text-white font-medium">defining clear goals,</span>
+            <span className="text-text-secondary font-medium">defining clear goals,</span>
             <span> understanding your users and mapping how your business runs before anything is built.</span>
           </p>
         </div>
@@ -121,14 +121,14 @@ export function OurApproach() {
           {/* ================= ROW 1 ================= */}
           <div className="grid gap-5 min-[751px]:grid-cols-[775fr_540fr] lg:h-[593px]">
             {/* Card 1: Discovery first (Wide) with Scroll Parallax */}
-            <article className="relative isolate overflow-hidden rounded-[12px] border border-white/10 bg-[#121214] min-h-[353px] lg:min-h-0 flex flex-col justify-between">
+            <article className="relative isolate overflow-hidden rounded-[12px] border border-border bg-bg-surface min-h-[353px] lg:min-h-0 flex flex-col justify-between">
               <div className="relative z-10 px-5 py-8 lg:px-9 lg:pt-[45px] lg:pb-0">
-                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-white">
+                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-text-secondary">
                   Discovery first
                 </h3>
                 <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-text-muted lg:mt-3">
                   <span>We begin by </span>
-                  <span className="text-white font-medium">defining clear goals,</span>
+                  <span className="text-text-secondary font-medium">defining clear goals,</span>
                   <span> understanding your users and mapping how your business runs before anything is built.</span>
                 </p>
               </div>
@@ -179,16 +179,16 @@ export function OurApproach() {
             </article>
 
             {/* Card 2: Design around people (Narrow) - Zero Cropping, Full Phone Bezels */}
-            <article className="relative isolate overflow-hidden rounded-[12px] border border-white/10 bg-[#121214] min-h-[391px] lg:min-h-0">
-              <div className="vv-art-mobile absolute inset-0 -z-10" aria-hidden="true" />
+            <article className="relative isolate overflow-hidden rounded-[12px] border border-border bg-bg-surface min-h-[391px] lg:min-h-0">
+              <div className="vv-art-mobile absolute inset-0 pointer-events-none opacity-80 dark:opacity-60" aria-hidden="true" />
 
               <div className="relative z-10 px-5 py-8 lg:px-9 lg:pt-[45px] lg:pb-0">
-                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-white">
+                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-text-secondary">
                   Design around people
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-white/70 lg:mt-3">
+                <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-text-muted lg:mt-3">
                   <span>Every screen, flow and dashboard is designed for </span>
-                  <span className="text-white font-medium">the people who use it,</span>
+                  <span className="text-text-secondary font-medium">the people who use it,</span>
                   <span> on any device.</span>
                 </p>
               </div>
@@ -216,16 +216,16 @@ export function OurApproach() {
           {/* ================= ROW 2 ================= */}
           <div className="grid gap-5 min-[751px]:grid-cols-[540fr_775fr] lg:h-[650px]">
             {/* Card 3: Built to convert (Narrow) with 3D Tilt on Scroll */}
-            <article className="relative isolate overflow-hidden rounded-[12px] border border-white/10 bg-[#121214] min-h-[398px] lg:min-h-0 flex flex-col justify-between">
-              <div className="vv-art-conversion absolute inset-0 -z-10" aria-hidden="true" />
+            <article className="relative isolate overflow-hidden rounded-[12px] border border-border bg-bg-surface min-h-[398px] lg:min-h-0 flex flex-col justify-between">
+              <div className="vv-art-conversion absolute inset-0 pointer-events-none opacity-80 dark:opacity-60" aria-hidden="true" />
 
               <div className="relative z-10 px-5 py-8 lg:px-9 lg:pt-[45px] lg:pb-0">
-                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-white">
+                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-text-secondary">
                   Built to convert
                 </h3>
                 <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-text-muted lg:mt-3">
                   <span>Products and sites built with strategy, designed to engage, and crafted to turn </span>
-                  <span className="text-white font-medium">visitors into customers.</span>
+                  <span className="text-text-secondary font-medium">visitors into customers.</span>
                 </p>
               </div>
 
@@ -292,16 +292,16 @@ export function OurApproach() {
             </article>
 
             {/* Card 4: Engineered to last (Wide) with Presence Cursors */}
-            <article className="relative isolate overflow-hidden rounded-[12px] border border-white/10 bg-[#121214] min-h-[399px] lg:min-h-0 flex flex-col justify-between">
-              <div className="vv-art-pixel absolute inset-0 -z-10" aria-hidden="true" />
+            <article className="relative isolate overflow-hidden rounded-[12px] border border-border bg-bg-surface min-h-[399px] lg:min-h-0 flex flex-col justify-between">
+              <div className="vv-art-pixel absolute inset-0 pointer-events-none opacity-80 dark:opacity-60" aria-hidden="true" />
 
               <div className="relative z-10 px-5 py-8 lg:px-9 lg:pt-[45px] lg:pb-0">
-                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-white">
+                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-text-secondary">
                   Engineered to last
                 </h3>
                 <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-text-muted lg:mt-3">
                   <span>Built with </span>
-                  <span className="text-white font-medium">clean, tested code</span>
+                  <span className="text-text-secondary font-medium">clean, tested code</span>
                   <span>, from interfaces to APIs, data and infrastructure.</span>
                 </p>
               </div>
@@ -310,7 +310,7 @@ export function OurApproach() {
               <div className="absolute inset-0 origin-top-left -translate-x-[4px] scale-[0.68] lg:translate-x-0 lg:scale-100">
                 <div className="pointer-events-none absolute inset-0">
                   <div
-                    className="absolute overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-[4px]"
+                    className="absolute overflow-hidden border border-border bg-bg-surface/50 backdrop-blur-[4px]"
                     style={{
                       left: 36,
                       top: 201,
@@ -438,16 +438,16 @@ export function OurApproach() {
           {/* ================= ROW 3 ================= */}
           <div className="grid gap-5 min-[751px]:grid-cols-[775fr_540fr] lg:h-[560px]">
             {/* Card 5: Launch and hand over (Wide) */}
-            <article className="relative isolate overflow-hidden rounded-[12px] border border-white/10 bg-[#121214] min-h-[430px] lg:min-h-0 flex flex-col justify-between">
-              <div className="vv-art-cms absolute inset-0 -z-10" aria-hidden="true" />
+            <article className="relative overflow-hidden rounded-[12px] border border-border bg-bg-surface min-h-[430px] lg:min-h-0 flex flex-col justify-between">
+              <div className="vv-art-cms absolute inset-0 pointer-events-none opacity-80 dark:opacity-40" aria-hidden="true" />
 
               <div className="relative z-10 px-5 py-8 lg:px-9 lg:pt-[45px] lg:pb-0">
-                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-white">
+                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-text-secondary">
                   Launch and hand over
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-white/70 lg:mt-3">
+                <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-text-muted lg:mt-3">
                   <span>Launched with documentation and an admin you can run, so you can </span>
-                  <span className="text-white font-medium">update and manage everything</span>
+                  <span className="text-text-secondary font-medium">update and manage everything</span>
                   <span> yourself after going live.</span>
                 </p>
               </div>
@@ -455,7 +455,7 @@ export function OurApproach() {
               {/* Handover CMS Documentation Table */}
               <div
                 aria-hidden="true"
-                className="relative mt-6 mr-0 ml-5 lg:ml-9 overflow-hidden rounded-tl-xl border-t border-l border-white/10 bg-black/90 p-4 lg:p-6"
+                className="relative mt-6 mr-0 ml-5 lg:ml-9 overflow-hidden rounded-tl-xl border-t border-l border-border bg-white/85 dark:bg-black/60 backdrop-blur-md shadow-xl p-4 lg:p-6"
               >
                 {/* Table Header */}
                 <div className="grid grid-cols-[1fr_120px_60px] lg:grid-cols-[1fr_150px_90px] gap-4 pb-3 text-[11px] font-medium uppercase tracking-wider text-text-muted">
@@ -465,20 +465,20 @@ export function OurApproach() {
                 </div>
 
                 {/* Table Rows */}
-                <div className="divide-y divide-white/10">
+                <div className="divide-y divide-border">
                   {HANDOVER_DOCS.map((doc) => (
                     <div
                       key={doc.title}
-                      className="grid grid-cols-[1fr_120px_60px] lg:grid-cols-[1fr_150px_90px] items-center gap-4 py-2.5 text-xs text-white/90"
+                      className="grid grid-cols-[1fr_120px_60px] lg:grid-cols-[1fr_150px_90px] items-center gap-4 py-2.5 text-xs text-text-secondary"
                     >
                       <div className="flex items-center gap-2.5 truncate">
-                        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-white/50" fill="currentColor">
+                        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-text-muted" fill="currentColor">
                           <path d="M6.5 2h6.67a1 1 0 0 1 .7.29l5.34 5.32a1 1 0 0 1 .29.71V20a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7.25 2.42v2.9a.6.6 0 0 0 .6.6h2.9l-3.5-3.5Z" />
                         </svg>
                         <span className="truncate">{doc.title}</span>
                       </div>
                       <span className="text-text-muted text-[11px]">{doc.date}</span>
-                      <div className="relative h-[24px] w-[40px] lg:h-[30px] lg:w-[50px] rounded overflow-hidden border border-white/10 bg-black">
+                      <div className="relative h-[24px] w-[40px] lg:h-[30px] lg:w-[50px] rounded overflow-hidden border border-border bg-bg-surface">
                         <Image
                           src={doc.img}
                           alt=""
@@ -494,20 +494,17 @@ export function OurApproach() {
             </article>
 
             {/* Card 6: Automate as you grow (Narrow) */}
-            <article className="relative isolate overflow-hidden rounded-[12px] border border-white/10 bg-[#121214] min-h-[380px] lg:min-h-0 flex flex-col justify-between">
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 -z-10"
-                style={{ background: "var(--vv-future-wash)" }}
-              />
-
+            <article
+              className="relative overflow-hidden rounded-[12px] border border-border min-h-[380px] lg:min-h-0 flex flex-col justify-between"
+              style={{ background: "var(--vv-future-wash)" }}
+            >
               <div className="relative z-10 px-5 py-8 lg:px-9 lg:pt-[45px] lg:pb-0">
-                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-white">
+                <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-[1.1] font-medium tracking-tight text-text-secondary">
                   Automate as you grow
                 </h3>
                 <p className="mt-2 text-xs sm:text-sm leading-[1.6] text-text-muted lg:mt-3">
                   <span>Systems designed to be </span>
-                  <span className="text-white font-medium">scalable and automated,</span>
+                  <span className="text-text-secondary font-medium">scalable and automated,</span>
                   <span> so repetitive work moves to automations and AI as you grow.</span>
                 </p>
               </div>
@@ -515,12 +512,18 @@ export function OurApproach() {
               {/* High-Precision Real-Time Clock Dial Visual */}
               <div className="relative flex flex-1 items-center justify-center p-6">
                 <div className="relative h-56 w-56 sm:h-64 sm:w-64">
-                  {/* Watch Face Base */}
+                  {/* Watch Face Base - Dual Dark & Light Face */}
                   <Image
                     src="/approach/dial.webp"
                     alt="Analog Dial"
                     fill
-                    className="object-contain"
+                    className="object-contain hidden dark:block"
+                  />
+                  <Image
+                    src="/approach/dial-light.webp"
+                    alt="Analog Dial"
+                    fill
+                    className="object-contain block dark:hidden"
                   />
 
                   {/* Rotating Hour Hand */}
@@ -533,7 +536,7 @@ export function OurApproach() {
                         src="/approach/hand-hour.webp"
                         alt="Hour Hand"
                         fill
-                        className="object-contain"
+                        className="object-contain dark:invert-0 invert transition-[filter] duration-300"
                       />
                     </div>
                   </div>
@@ -548,7 +551,7 @@ export function OurApproach() {
                         src="/approach/hand-minute.webp"
                         alt="Minute Hand"
                         fill
-                        className="object-contain"
+                        className="object-contain dark:invert-0 invert transition-[filter] duration-300"
                       />
                     </div>
                   </div>
@@ -563,7 +566,7 @@ export function OurApproach() {
                         src="/approach/hand-second.webp"
                         alt="Second Hand"
                         fill
-                        className="object-contain"
+                        className="object-contain dark:invert-0 invert transition-[filter] duration-300"
                       />
                     </div>
                   </div>

@@ -8,21 +8,21 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-white text-black rounded-full hover:bg-gray-light active:scale-[0.98] font-medium shadow-sm",
+          "bg-text-secondary text-bg-canvas rounded-full hover:opacity-90 active:scale-[0.98] font-medium shadow-sm",
         accent:
           "bg-accent text-gray-deep rounded-full hover:bg-[#8cff76] active:scale-[0.98] font-medium shadow-sm",
         secondary:
-          "bg-white text-gray-deep rounded-full hover:bg-gray-light active:scale-[0.98] font-medium",
+          "bg-text-secondary text-bg-canvas rounded-full hover:opacity-90 active:scale-[0.98] font-medium",
         outline:
-          "border border-white/20 text-text-secondary bg-transparent hover:border-white/40 hover:bg-white/5 active:scale-[0.98] rounded-full font-medium",
+          "border border-border text-text-secondary bg-transparent hover:border-text-secondary/40 hover:bg-bg-surface active:scale-[0.98] rounded-full font-medium",
         glass:
-          "border border-transparent bg-white/10 text-white hover:bg-white/20 active:scale-[0.98] rounded-full font-medium",
+          "border border-border/50 bg-text-secondary/10 text-text-secondary hover:bg-text-secondary/20 active:scale-[0.98] rounded-full font-medium",
         ghost:
-          "bg-transparent text-text-secondary hover:text-white hover:bg-white/5 rounded-md",
+          "bg-transparent text-text-secondary hover:bg-bg-surface rounded-md",
         nav:
-          "text-text-primary hover:text-white text-[15px] font-normal transition-colors duration-200",
+          "text-text-primary hover:text-text-secondary text-[15px] font-normal transition-colors duration-200",
         pill:
-          "bg-[#141414] border border-border text-text-secondary rounded-full hover:border-white/30 hover:bg-[#1f1f1f]",
+          "bg-bg-surface border border-border text-text-secondary rounded-full hover:border-text-secondary/30 hover:bg-bg-surface/80",
       },
       size: {
         sm: "h-8 px-3.5 text-xs",

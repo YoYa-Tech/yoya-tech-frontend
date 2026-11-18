@@ -99,7 +99,7 @@ function CardInnerGlow() {
         className="pointer-events-none absolute top-0 left-1/2 h-px w-[420px] max-w-[80%] -translate-x-1/2"
         style={{
           background:
-            "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%)",
+            "linear-gradient(90deg, transparent 0%, var(--vv-tint-strong) 50%, transparent 100%)",
         }}
       />
       <span
@@ -107,7 +107,7 @@ function CardInnerGlow() {
         className="pointer-events-none absolute inset-0 rounded-[12px]"
         style={{
           background:
-            "radial-gradient(58% 46% at 50% 0%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 45%, transparent 78%)",
+            "radial-gradient(58% 46% at 50% 0%, var(--vv-tint) 0%, var(--vv-tint-weak) 45%, transparent 78%)",
         }}
       />
     </>
@@ -178,7 +178,7 @@ export function TestimonialsSection() {
       ref={sectionRef}
       id="testimonials"
       aria-labelledby="testimonials-heading"
-      className="relative isolate z-10 overflow-hidden bg-black py-[clamp(80px,9vw,120px)] border-b border-white/10"
+      className="relative isolate z-10 overflow-hidden bg-bg-canvas text-text-secondary py-[clamp(80px,9vw,120px)] border-b border-border"
     >
       {/* Interactive 3D WebGL Rotating Globe Background */}
       <div
@@ -190,13 +190,13 @@ export function TestimonialsSection() {
         </div>
       </div>
 
-      {/* Radial fade mask over globe for seamless dark immersion */}
+      {/* Radial fade mask over globe for seamless canvas immersion */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(62% 62% at 50% 42%, transparent 42%, rgba(0, 0, 0, 0.45) 70%, #000000 96%)",
+            "radial-gradient(62% 62% at 50% 42%, transparent 42%, color-mix(in srgb, var(--color-bg-canvas, #000) 45%, transparent) 70%, var(--color-bg-canvas, #000000) 96%)",
         }}
       />
 
@@ -204,7 +204,7 @@ export function TestimonialsSection() {
         {/* Giant Centerpiece Heading */}
         <h2
           id="testimonials-heading"
-          className="text-center font-display text-[clamp(46px,9vw,132px)] leading-[1] font-medium tracking-[-0.05em] text-white"
+          className="text-center font-display text-[clamp(46px,9vw,132px)] leading-[1] font-medium tracking-[-0.05em] text-text-secondary"
         >
           Testimonials
         </h2>
@@ -220,12 +220,12 @@ export function TestimonialsSection() {
           <div className="mx-auto grid max-w-[1120px] gap-4 lg:grid-cols-12">
             {/* Left Card: 3 Live Count-Up Stats */}
             <div
-              className="relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 backdrop-blur-[12px] order-2 flex flex-col justify-between gap-8 p-8 lg:order-1 lg:col-span-4 lg:gap-10 lg:p-10 shadow-[0_24px_50px_rgba(0,0,0,0.8)]"
+              className="relative overflow-hidden rounded-[12px] border border-border bg-bg-surface/85 backdrop-blur-[12px] order-2 flex flex-col justify-between gap-8 p-8 lg:order-1 lg:col-span-4 lg:gap-10 lg:p-10 shadow-xl"
             >
               <CardInnerGlow />
               {STATS.map((s, idx) => (
                 <div key={s.label} className="relative">
-                  <div className="flex items-start font-display text-[clamp(40px,4.4vw,60px)] leading-[0.9] font-medium tracking-[-0.045em] text-white">
+                  <div className="flex items-start font-display text-[clamp(40px,4.4vw,60px)] leading-[0.9] font-medium tracking-[-0.045em] text-text-secondary">
                     <span className="tabular-nums">
                       {hasScrolledIn ? animatedValues[idx] : s.value}
                     </span>
@@ -242,7 +242,7 @@ export function TestimonialsSection() {
 
             {/* Right Card: Client Testimonial Carousel */}
             <div
-              className="relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 backdrop-blur-[12px] order-1 flex flex-col p-8 lg:order-2 lg:col-span-8 lg:p-11 shadow-[0_24px_50px_rgba(0,0,0,0.8)]"
+              className="relative overflow-hidden rounded-[12px] border border-border bg-bg-surface/85 backdrop-blur-[12px] order-1 flex flex-col p-8 lg:order-2 lg:col-span-8 lg:p-11 shadow-xl"
             >
               <CardInnerGlow />
 
@@ -250,7 +250,7 @@ export function TestimonialsSection() {
               <div className="relative flex items-center justify-between gap-6">
                 <div>
                   <p className="text-xs sm:text-sm tracking-[0.06em] text-text-muted tabular-nums">
-                    <span className="text-white font-medium" aria-live="polite">
+                    <span className="text-text-secondary font-medium" aria-live="polite">
                       {formatNum(currentIndex)}
                     </span>{" "}
                     <span aria-hidden="true">/ {formatNum(total - 1)}</span>
@@ -258,10 +258,10 @@ export function TestimonialsSection() {
                   </p>
                   <span
                     aria-hidden="true"
-                    className="mt-2.5 block h-px w-14 bg-white/20"
+                    className="mt-2.5 block h-px w-14 bg-border"
                   />
                 </div>
-                <DoubleQuoteIcon className="h-[clamp(20px,2.2vw,28px)] w-auto shrink-0 text-white opacity-30" />
+                <DoubleQuoteIcon className="h-[clamp(20px,2.2vw,28px)] w-auto shrink-0 text-text-secondary opacity-30" />
               </div>
 
               {/* Quote Body with Star Rating & Fade Transition */}
@@ -285,7 +285,7 @@ export function TestimonialsSection() {
                       )}
 
                       <blockquote
-                        className={`mt-auto font-display text-[clamp(18px,1.7vw,25px)] leading-[1.4] font-medium tracking-[-0.02em] text-white ${
+                        className={`mt-auto font-display text-[clamp(18px,1.7vw,25px)] leading-[1.4] font-medium tracking-[-0.02em] text-text-secondary ${
                           t.rating ? "pt-6" : ""
                         }`}
                       >
@@ -295,7 +295,7 @@ export function TestimonialsSection() {
                       {/* Author Caption */}
                       <figcaption className="mt-7 flex items-center gap-3.5 sm:pr-24">
                         {t.avatar ? (
-                          <div className="relative size-12 shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/5">
+                          <div className="relative size-12 shrink-0 overflow-hidden rounded-full border border-border bg-bg-surface">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={t.avatar}
@@ -310,14 +310,14 @@ export function TestimonialsSection() {
                         ) : (
                           <span
                             aria-hidden="true"
-                            className="grid size-12 shrink-0 place-items-center rounded-full border border-white/10 bg-white/5 font-display text-[17px] font-medium text-white/70"
+                            className="grid size-12 shrink-0 place-items-center rounded-full border border-border bg-bg-surface font-display text-[17px] font-medium text-text-muted"
                           >
                             {t.name.trim().charAt(0).toUpperCase()}
                           </span>
                         )}
 
                         <span className="min-w-0">
-                          <span className="block truncate text-[15px] font-medium tracking-[0.02em] text-white uppercase">
+                          <span className="block truncate text-[15px] font-medium tracking-[0.02em] text-text-secondary uppercase">
                             {t.name}
                           </span>
                           {(t.role || t.company) && (
@@ -338,14 +338,14 @@ export function TestimonialsSection() {
                   type="button"
                   onClick={() => goTo(currentIndex - 1)}
                   aria-label="Previous testimonial"
-                  className="grid size-10 place-items-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
+                  className="grid size-10 place-items-center rounded-full border border-border text-text-muted transition-colors hover:border-text-secondary/40 hover:bg-bg-surface hover:text-text-secondary"
                 >
                   <svg
                     viewBox="0 0 24 24"
                     className="size-[18px]"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="1.8"
+                    strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     aria-hidden="true"
@@ -357,7 +357,7 @@ export function TestimonialsSection() {
                   type="button"
                   onClick={() => goTo(currentIndex + 1)}
                   aria-label="Next testimonial"
-                  className="grid size-10 place-items-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
+                  className="grid size-10 place-items-center rounded-full border border-border text-text-muted transition-colors hover:border-text-secondary/40 hover:bg-bg-surface hover:text-text-secondary"
                 >
                   <span className="rotate-180">
                     <svg
@@ -365,7 +365,7 @@ export function TestimonialsSection() {
                       className="size-[18px]"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="1.8"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       aria-hidden="true"

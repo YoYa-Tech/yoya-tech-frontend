@@ -66,6 +66,13 @@ const DARK_PALETTE = [
   0.95, 0.95, 0.95,
 ];
 
+const LIGHT_PALETTE = [
+  1.0, 1.0, 1.0,
+  0.78, 0.78, 0.78,
+  0.36, 0.36, 0.36,
+  0.05, 0.05, 0.05,
+];
+
 export function WaterRipple() {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
@@ -114,7 +121,17 @@ export function WaterRipple() {
     const uTime = gl.getUniformLocation(program, "u_time");
     const uCursor = gl.getUniformLocation(program, "u_cursor");
 
-    gl.uniform3fv(uColors, new Float32Array(DARK_PALETTE));
+    const applyPalette = () => {
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      gl.uniform3fv(uColors, new Float32Array(isLight ? LIGHT_PALETTE : DARK_PALETTE));
+    };
+    applyPalette();
+
+    const themeObserver = new MutationObserver(applyPalette);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     let frame = 0;
     let running = true;
@@ -185,6 +202,7 @@ export function WaterRipple() {
     return () => {
       running = false;
       cancelAnimationFrame(frame);
+      themeObserver.disconnect();
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       window.removeEventListener("mousemove", onPointerMove);
@@ -204,4 +222,3 @@ export function WaterRipple() {
     </div>
   );
 }
-

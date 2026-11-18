@@ -124,7 +124,7 @@ export function BusinessOutcomes() {
   const currentActive = hoveredIndex !== null ? hoveredIndex : scrollActiveIndex;
 
   return (
-    <section className="kuru-outcomes bg-black text-white" aria-labelledby="kuru-outcomes-heading">
+    <section className="kuru-outcomes bg-bg-canvas text-text-secondary" aria-labelledby="kuru-outcomes-heading">
       <div className="kuru-wrap kuru-outcomes-grid">
         {/* Sticky Intro on the Left */}
         <div className="kuru-outcomes-intro">
@@ -135,11 +135,11 @@ export function BusinessOutcomes() {
             From customer-facing platforms to internal workflows, we design and build solutions that remove friction and unlock opportunities.
           </p>
           <Link
-            className="kuru-text-link group mt-8 inline-flex items-center gap-2 text-sm text-text-muted hover:text-white transition-colors"
+            className="kuru-text-link group mt-8 inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-secondary transition-colors"
             href="#pricing"
           >
             <span>More about YoYa Tech</span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            <ArrowRight strokeWidth={1.5} className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
 

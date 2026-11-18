@@ -51,7 +51,7 @@ const ROW_2 = [
 export function TechMarquee() {
   return (
     <section
-      className="kuru-tools border-y border-white/5 bg-black"
+      className="kuru-tools border-y border-border bg-bg-canvas"
       aria-label="Tools and platforms we build with"
     >
       {/* Row 1 (Leftward scroll) */}
@@ -59,8 +59,8 @@ export function TechMarquee() {
         <ul className="kuru-tools-track">
           {ROW_1.map((tool) => (
             <li key={tool.name} className="kuru-tool group cursor-default">
-              <ToolIcon slug={tool.slug} size={20} className="text-white/70 group-hover:text-accent transition-colors" />
-              <span className="font-medium text-white/80 group-hover:text-white transition-colors">
+              <ToolIcon slug={tool.slug} size={20} className="text-text-muted group-hover:text-accent transition-colors" />
+              <span className="font-medium text-text-muted group-hover:text-text-secondary transition-colors">
                 {tool.name}
               </span>
             </li>
@@ -69,8 +69,8 @@ export function TechMarquee() {
         <ul className="kuru-tools-track" aria-hidden="true">
           {ROW_1.map((tool) => (
             <li key={`${tool.name}-dup`} className="kuru-tool group cursor-default">
-              <ToolIcon slug={tool.slug} size={20} className="text-white/70 group-hover:text-accent transition-colors" />
-              <span className="font-medium text-white/80 group-hover:text-white transition-colors">
+              <ToolIcon slug={tool.slug} size={20} className="text-text-muted group-hover:text-accent transition-colors" />
+              <span className="font-medium text-text-muted group-hover:text-text-secondary transition-colors">
                 {tool.name}
               </span>
             </li>
@@ -83,8 +83,8 @@ export function TechMarquee() {
         <ul className="kuru-tools-track">
           {ROW_2.map((tool) => (
             <li key={tool.name} className="kuru-tool group cursor-default">
-              <ToolIcon slug={tool.slug} size={20} className="text-white/70 group-hover:text-accent transition-colors" />
-              <span className="font-medium text-white/80 group-hover:text-white transition-colors">
+              <ToolIcon slug={tool.slug} size={20} className="text-text-muted group-hover:text-accent transition-colors" />
+              <span className="font-medium text-text-muted group-hover:text-text-secondary transition-colors">
                 {tool.name}
               </span>
             </li>
@@ -93,8 +93,8 @@ export function TechMarquee() {
         <ul className="kuru-tools-track" aria-hidden="true">
           {ROW_2.map((tool) => (
             <li key={`${tool.name}-dup`} className="kuru-tool group cursor-default">
-              <ToolIcon slug={tool.slug} size={20} className="text-white/70 group-hover:text-accent transition-colors" />
-              <span className="font-medium text-white/80 group-hover:text-white transition-colors">
+              <ToolIcon slug={tool.slug} size={20} className="text-text-muted group-hover:text-accent transition-colors" />
+              <span className="font-medium text-text-muted group-hover:text-text-secondary transition-colors">
                 {tool.name}
               </span>
             </li>
